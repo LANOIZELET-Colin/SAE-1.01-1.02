@@ -1,0 +1,12 @@
+﻿Très bien, alors voici les règles : 
+
+BipBoup est un jeu tour par tour à deux joueurs où le but est d’éliminer le joueur adverse à l’aide d’un pistolet.
+Au départ, vous avez 100 points de vie. 
+
+- Lors du tour d’un joueur, il doit répondre à une question le plus rapidement possible. 
+- Le temps de réponse définit la valeur des dégâts. Plus il répond rapidement, plus il fait des dégâts. Vous avez 20 secondes maximum.
+- Une mauvaise réponse ou un temps trop important de réflexion signifie que le joueur rate son tir. 
+- Vous pouvez également vous soigner à l’aide d'objets utilisables qu’une seule fois.
+- Vous ne pouvez faire qu’une seule action par tour donc réfléchissez bien avant d’agir.
+
+Appuyer sur entrée pour retourner au menu.

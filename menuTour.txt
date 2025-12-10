@@ -1,0 +1,6 @@
+===== TOUR DE <<Joueur.nom>> =====
+Actions disponibles :
+1. Attaquer
+2. Se soigner
+HP : <<Joueur.HP>>
+============================
