@@ -44,7 +44,7 @@ class BipBoup extends Program{
      */
     boolean ChoixDuPremierJoueur(){
         
-        
+
         println("McCree, appuie sur entrée pour lancer le dé.");
         readString();
         int lancer1 = random(1,6);
@@ -66,6 +66,7 @@ class BipBoup extends Program{
     void algorithm(){
         char choice;
         do {
+            print("HELLO LES PD")
             dump("menu.txt");
             choice = readChar();
             if (choice == '1'){
