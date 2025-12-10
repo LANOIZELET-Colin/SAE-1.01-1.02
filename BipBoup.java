@@ -44,6 +44,7 @@ class BipBoup extends Program{
      */
     boolean ChoixDuPremierJoueur(){
         
+        
         println("McCree, appuie sur entrée pour lancer le dé.");
         readString();
         int lancer1 = random(1,6);
