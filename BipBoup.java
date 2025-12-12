@@ -66,7 +66,6 @@ class BipBoup extends Program{
     void algorithm(){
         char choice;
         do {
-            print("HELLO LES PD")
             dump("menu.txt");
             choice = readChar();
             if (choice == '1'){
