@@ -66,8 +66,8 @@ class BipBoup extends Program{
     void algorithm(){
         String choice;
         do {
-            dump("menu.txt");2
-            
+            dump("menu.txt");
+
             choice = readString();
             if (equals(choice,"1")){
                 dump("regles.txt");
