@@ -66,6 +66,7 @@ class BipBoup extends Program{
     void algorithm(){
         char choice;
         do {
+            niquez vos McCree
             dump("menu.txt");
             choice = readChar();
             if (choice == '1'){
