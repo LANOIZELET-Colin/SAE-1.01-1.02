@@ -1,4 +1,7 @@
+
 import extensions.File;
+import extensions.CSVFile;
+
 
 /*placeholder pour les fichier => "Tour de <<NomJoueur>>"
 remplacer(string s, string avant, string apres)
@@ -6,7 +9,10 @@ remplacer(string s, string avant, string apres)
 
 class BipBoup extends Program{
 
+   
 // Création des joueurs
+   
+   
     final Joueur McCree = newJoueur("McCree", 100, 100, new boolean[]{true, true});
     final Joueur Cassidy = newJoueur("Cassidy", 100, 100, new boolean[]{true, true});
 
@@ -19,8 +25,10 @@ class BipBoup extends Program{
         return j;
     }
 
-// endgroupe
 
+// Fonction extenstion.File
+   
+    
     int nbLignes(String nomFichier){
         int lines = 0;
         File file = newFile(nomFichier);
@@ -37,7 +45,39 @@ class BipBoup extends Program{
             println(readLine(fichier));
         }
     }
+
+
+// Fonction extension.CSV
     
+    
+    
+    CSVFile QuestionsFile = loadCSV("questions.csv");
+   
+    void print(CSVFile csv) {
+        for (int line=0; line < rowCount(csv); line++) {
+            for (int column=0; column < columnCount(csv, line); column++) {
+                print(getCell(csv, line, column)+"|");
+                }
+            println();
+            }
+        } 
+
+   /* 
+   
+    int questionTime(){
+         print(QuestionsFile);
+        println(columnCount(QuestionsFile));
+        println(rowCount(QuestionsFile));
+        println(getCell(QuestionsFile, random(0,10), 0));
+    }
+    */
+
+
+// Fonction principal de la partie
+   
+   
+   
+   
     boolean partieFinie(){
         return (Cassidy.HP < 0 || McCree.HP < 0);
     }
@@ -63,6 +103,13 @@ class BipBoup extends Program{
         }
     }
 
+    /*void menuJoueur(){
+        dump
+    }
+*/
+
+// Programme principale     
+
     void algorithm(){
         String choice;
         do {
@@ -70,7 +117,7 @@ class BipBoup extends Program{
 
             choice = readString();
             if (equals(choice,"1")){
-                dump("regles.txt");
+                dump("regles.txt");               
                 readString();
             }else if (equals(choice,"2")){
             }else if (equals(choice,"3")){
@@ -81,8 +128,11 @@ class BipBoup extends Program{
                 }
         } while (!equals(choice,"2"));
 
-            println("Tout d'abord, le joueur 1 incarnera McCree et le joueur 2 incarnera Cassidy.");
+            println("Tout d’abord, décidez vous qui incarnera McCree ou Cassidy (Pas de bagarre, ce n’est qu’un nom provisoire)");
             println("Maintenant, on va lancer des dés pour déterminer qui commencera.");
-            boolean McCreeTurn = ChoixDuPremierJoueur();  
+            boolean McCreeTurn = ChoixDuPremierJoueur();
+
+
+            
     }
 }
