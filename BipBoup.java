@@ -79,7 +79,7 @@ class BipBoup extends Program{
    
    
     boolean partieFinie(){
-        return (Cassidy.HP < 0 || McCree.HP < 0);
+        return (Cassidy.HP <= 0 || McCree.HP <= 0);
     }
      
     boolean ChoixDuPremierJoueur(){
@@ -106,6 +106,8 @@ class BipBoup extends Program{
     /*void menuJoueur(){
         dump
     }
+
+    
 */
 
 // Programme principale     
@@ -131,6 +133,8 @@ class BipBoup extends Program{
             println("Tout d’abord, décidez vous qui incarnera McCree ou Cassidy (Pas de bagarre, ce n’est qu’un nom provisoire)");
             println("Maintenant, on va lancer des dés pour déterminer qui commencera.");
             boolean McCreeTurn = ChoixDuPremierJoueur();
+             
+            
 
 
             
