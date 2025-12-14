@@ -11,6 +11,8 @@ class BipBoup extends Program{
 
    
 // Création et paramètrage des joueurs
+   
+
 
     Joueur newJoueur(String nom, int HP_max, int HP, boolean[] soin){
         Joueur j = new Joueur();
@@ -57,16 +59,11 @@ class BipBoup extends Program{
             println();
             }
         } 
+    
 
-   /* 
+// Fonction principal de la partie
    
-    int questionTime(){
-         print(QuestionsFile);
-        println(columnCount(QuestionsFile));
-        println(rowC);
-    }
-    */
-    void questionTime(Joueur j_actuelle, Joueur j_autre){
+   void questionTime(Joueur j_actuelle, Joueur j_autre){
         int damage = 20;
         int numQuestion = random(0,rowCount(QuestionsFile)-1);
         String question = getCell(QuestionsFile, numQuestion, 0);
@@ -82,8 +79,6 @@ class BipBoup extends Program{
         if(equals(j_Answer, answer)){
             damage = 20 - (int)timeCompt;
             j_autre.HP -= damage;
-            println(damage);
-            println("hp = "+j_autre.HP);
             println("Bravo, tu as mis "+ timeCompt +" secondes à répondre");
             println("Tu infliges "+ damage +" dégâts à ton adversaire !");
 
@@ -91,18 +86,12 @@ class BipBoup extends Program{
             println("Bravo, tu as mis "+ timeCompt +" secondes à répondre de la merde");
             println("la réponse était : "+answer);
         }
+        sleep(5000);
         
     }
+   
+   
 
-// Fonction principal de la partie
-   
-   
-   
-   
-    boolean partieFinie(){
-        return (Cassidy.HP <= 0 || McCree.HP <= 0);
-    }
-     
     boolean ChoixDuPremierJoueur(){
         println("McCree, appuie sur entrée pour lancer le dé.");
         readString();
@@ -124,7 +113,60 @@ class BipBoup extends Program{
         }
     }
 
-    void menuJoueur(Joueur j_actuelle, joueurs j_actuelle){
+    void menuSoin(Joueur j_actuelle, Joueur j_autre){
+
+        String choice;
+        
+         do {
+            println("===== TOUR DE "+j_actuelle.nom+" =====");
+            println("Chaque soin est utilisable qu’une seule fois");
+            println("1 : Limon D.Va (10 HP)");
+            println("2 : La pocket-Mercy (30 HP)");
+            println("3 : annuler");
+            println("============================");
+
+            choice = readString();
+            if (equals(choice,"1")){
+                if(j_actuelle.soin[0] == true){
+                    j_actuelle.HP += 10;
+                    if(j_actuelle.HP > j_actuelle.HP_max){
+                        j_actuelle.HP = 100;
+                    }
+                    j_actuelle.soin[0] = false;
+                    println("Vous prenez une bonne grosse gorgé de limon D.Va");
+                    println("vous récupéré 10HP ("+j_actuelle.HP+" restants)");
+                    sleep(3000);
+                }else{
+                    println("vous en avez plus, dommage");
+                    sleep(2000);
+                    menuSoin(j_actuelle,j_autre);
+                }
+            }else if (equals(choice,"2")){
+                if(j_actuelle.soin[1] == true){
+                    j_actuelle.HP += 30;
+                    if(j_actuelle.HP > j_actuelle.HP_max){
+                        j_actuelle.HP = 100;
+                    }
+                    j_actuelle.soin[1] = false;
+                    println("La ange vous avez apprécie beaucoup (peut-être trop)");
+                    println("vous récupéré 30HP ("+j_actuelle.HP+" restants)");
+                    sleep(3000);
+                }else{
+                    println("la ange a quitté la partie, courage");
+                    sleep(2000);
+                    menuSoin(j_actuelle,j_autre);
+                }
+            }else if (equals(choice,"3")){
+                menuJoueur(j_actuelle, j_autre);
+            }else{
+                println("Veuillez choisir un chiffre entre 1 et 2");
+                sleep(1000);
+                }
+        } while ( (!equals(choice,"1")) && (!equals(choice,"2")) && (!equals(choice,"3")) );
+
+    }
+
+    void menuJoueur(Joueur j_actuelle, Joueur j_autre){
         String choice;
         
         
@@ -139,9 +181,8 @@ class BipBoup extends Program{
             choice = readString();
             if (equals(choice,"1")){
                 questionTime(j_actuelle, j_autre);
-                println("question time !!!");
             }else if (equals(choice,"2")){
-                println("on se soigne !!!");
+                menuSoin(j_actuelle,j_autre);
             }else{
             println("Veuillez choisir un chiffre entre 1 et 2");
             sleep(1000);
@@ -179,14 +220,26 @@ class BipBoup extends Program{
             println("Tout d’abord, décidez vous qui incarnera McCree ou Cassidy (Pas de bagarre, ce n’est qu’un nom provisoire)");
             println("Maintenant, on va lancer des dés pour déterminer qui commencera.");
             boolean McCreeTurn = ChoixDuPremierJoueur();
-            if(McCreeTurn == true){
-                menuJoueur(McCree, Cassidy);
+        
+            while(!(Cassidy.HP <= 0 || McCree.HP <= 0)){
+                if(McCreeTurn == true){
+                    println("C'est au tour de McCree");
+                    menuJoueur(McCree, Cassidy);
+                }else{
+                    println("C'est au tour de Cassidy");
+                    menuJoueur(Cassidy, McCree);
+                 } 
+                McCreeTurn = !McCreeTurn;
+            }
+            
+            println("partie fini !!!!!");
+            
+            if(Cassidy.HP <= 0 ){
+                println("Bravo McCree, tu as repris ta vrai place du King du FarWest. Le jeune part comme si il n'était jamais venu");
             }else{
-                menuJoueur(Cassidy);
+                println("Bravo Cassidy, tu garde la place du King. L'ancien retourne dans sa tombe");
             }
-            questionTime(McCree, Cassidy);
-            while(!partieFinie()){
-            }
+
              
             
 
