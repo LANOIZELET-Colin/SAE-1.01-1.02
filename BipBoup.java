@@ -10,11 +10,7 @@ remplacer(string s, string avant, string apres)
 class BipBoup extends Program{
 
    
-// Création des joueurs
-   
-   
-    final Joueur McCree = newJoueur("McCree", 100, 100, new boolean[]{true, true});
-    final Joueur Cassidy = newJoueur("Cassidy", 100, 100, new boolean[]{true, true});
+// Création et paramètrage des joueurs
 
     Joueur newJoueur(String nom, int HP_max, int HP, boolean[] soin){
         Joueur j = new Joueur();
@@ -67,11 +63,36 @@ class BipBoup extends Program{
     int questionTime(){
          print(QuestionsFile);
         println(columnCount(QuestionsFile));
-        println(rowCount(QuestionsFile));
-        println(getCell(QuestionsFile, random(0,10), 0));
+        println(rowC);
     }
     */
+    void questionTime(Joueur j_actuelle, Joueur j_autre){
+        int damage = 20;
+        int numQuestion = random(0,rowCount(QuestionsFile)-1);
+        String question = getCell(QuestionsFile, numQuestion, 0);
+        String answer = getCell(QuestionsFile, numQuestion, 1);
+        println("PRET ?");
+        sleep(3000);
+        println("GOOOOOOO !");
+        println(question);
+        long débutCompt = getTime(); 
+        String j_Answer = readString();
+        long finCompt = getTime();
+        double timeCompt = (finCompt - débutCompt)/(double)1000; 
+        if(equals(j_Answer, answer)){
+            damage = 20 - (int)timeCompt;
+            j_autre.HP -= damage;
+            println(damage);
+            println("hp = "+j_autre.HP);
+            println("Bravo, tu as mis "+ timeCompt +" secondes à répondre");
+            println("Tu infliges "+ damage +" dégâts à ton adversaire !");
 
+        }else{
+            println("Bravo, tu as mis "+ timeCompt +" secondes à répondre de la merde");
+            println("la réponse était : "+answer);
+        }
+        
+    }
 
 // Fonction principal de la partie
    
@@ -103,16 +124,41 @@ class BipBoup extends Program{
         }
     }
 
-    /*void menuJoueur(){
-        dump
+    void menuJoueur(Joueur j_actuelle, joueurs j_actuelle){
+        String choice;
+        
+        
+        do {
+            println("===== TOUR DE "+j_actuelle.nom+" =====");
+            println("Actions disponibles :");
+            println("1. Attaquer");
+            println("2. Se soigner");
+            println("HP : "+j_actuelle.HP);
+            println("============================");
+
+            choice = readString();
+            if (equals(choice,"1")){
+                questionTime(j_actuelle, j_autre);
+                println("question time !!!");
+            }else if (equals(choice,"2")){
+                println("on se soigne !!!");
+            }else{
+            println("Veuillez choisir un chiffre entre 1 et 2");
+            sleep(1000);
+                }
+        } while ( (!equals(choice,"2")) && (!equals(choice,"1"))  );
+        
     }
+    
 
     
-*/
+
 
 // Programme principale     
 
     void algorithm(){
+        Joueur McCree = newJoueur("McCree", 100, 100, new boolean[]{true, true});
+        Joueur Cassidy = newJoueur("Cassidy", 100, 100, new boolean[]{true, true});
         String choice;
         do {
             dump("menu.txt");
@@ -133,6 +179,14 @@ class BipBoup extends Program{
             println("Tout d’abord, décidez vous qui incarnera McCree ou Cassidy (Pas de bagarre, ce n’est qu’un nom provisoire)");
             println("Maintenant, on va lancer des dés pour déterminer qui commencera.");
             boolean McCreeTurn = ChoixDuPremierJoueur();
+            if(McCreeTurn == true){
+                menuJoueur(McCree, Cassidy);
+            }else{
+                menuJoueur(Cassidy);
+            }
+            questionTime(McCree, Cassidy);
+            while(!partieFinie()){
+            }
              
             
 
