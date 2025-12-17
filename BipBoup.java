@@ -148,7 +148,7 @@ class BipBoup extends Program{
                         j_actuelle.HP = 100;
                     }
                     j_actuelle.soin[1] = false;
-                    println("La ange vous avez apprécie beaucoup (peut-être trop)");
+                    println("La ange vous apprécie beaucoup (peut-être trop)");
                     println("vous récupéré 30HP ("+j_actuelle.HP+" restants)");
                     sleep(3000);
                 }else{
@@ -171,6 +171,7 @@ class BipBoup extends Program{
         
         
         do {
+            print("\033[H\033[2J");                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
             println("===== TOUR DE "+j_actuelle.nom+" =====");
             println("Actions disponibles :");
             println("1. Attaquer");
@@ -198,48 +199,51 @@ class BipBoup extends Program{
 // Programme principale     
 
     void algorithm(){
-        Joueur McCree = newJoueur("McCree", 100, 100, new boolean[]{true, true});
-        Joueur Cassidy = newJoueur("Cassidy", 100, 100, new boolean[]{true, true});
-        String choice;
-        do {
-            dump("menu.txt");
+        while(true){
+            Joueur McCree = newJoueur("McCree", 100, 100, new boolean[]{true, true});
+            Joueur Cassidy = newJoueur("Cassidy", 100, 100, new boolean[]{true, true});
+            String choice;
+            do {
+                dump("menu.txt");
 
-            choice = readString();
-            if (equals(choice,"1")){
-                dump("regles.txt");               
-                readString();
-            }else if (equals(choice,"2")){
-            }else if (equals(choice,"3")){
-                System.exit(0);
-            }else{
-            println("Veuillez choisir un chiffre entre 1 et 3");
-            sleep(1000);
-                }
-        } while (!equals(choice,"2"));
-
-            println("Tout d’abord, décidez vous qui incarnera McCree ou Cassidy (Pas de bagarre, ce n’est qu’un nom provisoire)");
-            println("Maintenant, on va lancer des dés pour déterminer qui commencera.");
-            boolean McCreeTurn = ChoixDuPremierJoueur();
-        
-            while(!(Cassidy.HP <= 0 || McCree.HP <= 0)){
-                if(McCreeTurn == true){
-                    println("C'est au tour de McCree");
-                    menuJoueur(McCree, Cassidy);
+                choice = readString();
+                if (equals(choice,"1")){
+                    dump("regles.txt");               
+                    readString();
+                }else if (equals(choice,"2")){
+                }else if (equals(choice,"3")){
+                    System.exit(0);
                 }else{
-                    println("C'est au tour de Cassidy");
-                    menuJoueur(Cassidy, McCree);
-                 } 
-                McCreeTurn = !McCreeTurn;
-            }
-            
-            println("partie fini !!!!!");
-            
-            if(Cassidy.HP <= 0 ){
-                println("Bravo McCree, tu as repris ta vrai place du King du FarWest. Le jeune part comme si il n'était jamais venu");
-            }else{
-                println("Bravo Cassidy, tu garde la place du King. L'ancien retourne dans sa tombe");
-            }
+                println("Veuillez choisir un chiffre entre 1 et 3");
+                sleep(1000);
+                    }
+            } while (!equals(choice,"2"));
 
+                println("Tout d’abord, décidez vous qui incarnera McCree ou Cassidy (Pas de bagarre, ce n’est qu’un nom provisoire)");
+                println("Maintenant, on va lancer des dés pour déterminer qui commencera.");
+                boolean McCreeTurn = ChoixDuPremierJoueur();
+            
+                while(!(Cassidy.HP <= 0 || McCree.HP <= 0)){
+                    print("\033[H\033[2J");
+                    if(McCreeTurn == true){
+                        println("C'est au tour de McCree");
+                        menuJoueur(McCree, Cassidy);
+                    }else{
+                        println("C'est au tour de Cassidy");
+                        menuJoueur(Cassidy, McCree);
+                    } 
+                    McCreeTurn = !McCreeTurn;
+                }
+                
+                println("partie fini !!!!!");
+                
+                if(Cassidy.HP <= 0 ){
+                    println("Bravo McCree, tu as repris ta vrai place du King du FarWest. Le jeune part comme si il n'était jamais venu");
+                }else{
+                    println("Bravo Cassidy, tu garde la place du King. L'ancien retourne dans sa tombe");
+                }
+                sleep(7000);
+        }
              
             
 
