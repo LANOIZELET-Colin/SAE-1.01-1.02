@@ -1,4 +1,3 @@
-
 import extensions.File;
 import extensions.CSVFile;
 
@@ -44,26 +43,23 @@ class BipBoup extends Program{
         }
     }
 
+// Fonction qui permet de nettoyer l'affichage du terminal
+
+    void nettoyageTerminal(){
+        print("\033[H\033[2J");
+    }
+
 
 // Fonction extension.CSV
-    
+
     
     
     CSVFile QuestionsFile = loadCSV("questions.csv");
-   
-    void print(CSVFile csv) {
-        for (int line=0; line < rowCount(csv); line++) {
-            for (int column=0; column < columnCount(csv, line); column++) {
-                print(getCell(csv, line, column)+"|");
-                }
-            println();
-            }
-        } 
     
 
 // Fonction principal de la partie
    
-   void questionTime(Joueur j_actuelle, Joueur j_autre){
+    void questionTime(Joueur j_actuelle, Joueur j_autre){
         int damage = 20;
         int numQuestion = random(0,rowCount(QuestionsFile)-1);
         String question = getCell(QuestionsFile, numQuestion, 0);
@@ -73,7 +69,7 @@ class BipBoup extends Program{
         println("GOOOOOOO !");
         println(question);
         long débutCompt = getTime(); 
-        String j_Answer = readString();
+        String j_Answer = toLowerCase(readString());
         long finCompt = getTime();
         double timeCompt = (finCompt - débutCompt)/(double)1000; 
         if(equals(j_Answer, answer)){
@@ -81,15 +77,15 @@ class BipBoup extends Program{
             j_autre.HP -= damage;
             println("Bravo, tu as mis "+ timeCompt +" secondes à répondre");
             println("Tu infliges "+ damage +" dégâts à ton adversaire !");
-
         }else{
-            println("Bravo, tu as mis "+ timeCompt +" secondes à répondre de la merde");
-            println("la réponse était : "+answer);
+            println("Oh non ! Ce n'était pas la bonne réponse ! \nTu aurais du répondre : " + answer);
         }
         sleep(5000);
         
     }
    
+
+    // détermine quel joueur commence en fonction de la valeur des dés
    
 
     boolean ChoixDuPremierJoueur(){
@@ -113,12 +109,17 @@ class BipBoup extends Program{
         }
     }
 
+
+    // affiche le menu des soin depuis le menu du joueur
+
+
     void menuSoin(Joueur j_actuelle, Joueur j_autre){
 
         String choice;
         
          do {
-            println("===== TOUR DE "+j_actuelle.nom+" =====");
+            nettoyageTerminal();;   
+            println("===== TOUR DE "+j_actuelle.nom+" ====="); // appeler un fichier pour le menu mais sans forcément cette ligne
             println("Chaque soin est utilisable qu’une seule fois");
             println("1 : Limon D.Va (10 HP)");
             println("2 : La pocket-Mercy (30 HP)");
@@ -166,13 +167,16 @@ class BipBoup extends Program{
 
     }
 
+    // affiche le menu du joueur actuel
+
+
     void menuJoueur(Joueur j_actuelle, Joueur j_autre){
         String choice;
         
         
         do {
-            print("\033[H\033[2J");                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-            println("===== TOUR DE "+j_actuelle.nom+" =====");
+            nettoyageTerminal();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+            println("===== TOUR DE "+j_actuelle.nom+" ====="); // à mettre dans un fichier, dans forcément cette ligne
             println("Actions disponibles :");
             println("1. Attaquer");
             println("2. Se soigner");
@@ -183,7 +187,7 @@ class BipBoup extends Program{
             if (equals(choice,"1")){
                 questionTime(j_actuelle, j_autre);
             }else if (equals(choice,"2")){
-                menuSoin(j_actuelle,j_autre);
+                menuSoin(j_actuelle, j_autre);
             }else{
             println("Veuillez choisir un chiffre entre 1 et 2");
             sleep(1000);
@@ -204,10 +208,12 @@ class BipBoup extends Program{
             Joueur Cassidy = newJoueur("Cassidy", 100, 100, new boolean[]{true, true});
             String choice;
             do {
+                nettoyageTerminal();
                 dump("menu.txt");
 
                 choice = readString();
                 if (equals(choice,"1")){
+                    print("\033[H\033[2J");   
                     dump("regles.txt");               
                     readString();
                 }else if (equals(choice,"2")){
@@ -219,30 +225,30 @@ class BipBoup extends Program{
                     }
             } while (!equals(choice,"2"));
 
-                println("Tout d’abord, décidez vous qui incarnera McCree ou Cassidy (Pas de bagarre, ce n’est qu’un nom provisoire)");
-                println("Maintenant, on va lancer des dés pour déterminer qui commencera.");
-                boolean McCreeTurn = ChoixDuPremierJoueur();
-            
-                while(!(Cassidy.HP <= 0 || McCree.HP <= 0)){
-                    print("\033[H\033[2J");
-                    if(McCreeTurn == true){
-                        println("C'est au tour de McCree");
-                        menuJoueur(McCree, Cassidy);
-                    }else{
-                        println("C'est au tour de Cassidy");
-                        menuJoueur(Cassidy, McCree);
-                    } 
-                    McCreeTurn = !McCreeTurn;
-                }
-                
-                println("partie fini !!!!!");
-                
-                if(Cassidy.HP <= 0 ){
-                    println("Bravo McCree, tu as repris ta vrai place du King du FarWest. Le jeune part comme si il n'était jamais venu");
+            println("Tout d’abord, décidez vous qui incarnera McCree ou Cassidy (Pas de bagarre, ce n’est qu’un nom provisoire)");
+            println("Maintenant, on va lancer des dés pour déterminer qui commencera.");
+            boolean McCreeTurn = ChoixDuPremierJoueur();
+            sleep(3000);            
+            while(!(Cassidy.HP <= 0 || McCree.HP <= 0)){
+                nettoyageTerminal();
+                if(McCreeTurn == true){
+                    println("C'est au tour de McCree");
+                    menuJoueur(McCree, Cassidy);
                 }else{
-                    println("Bravo Cassidy, tu garde la place du King. L'ancien retourne dans sa tombe");
-                }
-                sleep(7000);
+                    println("C'est au tour de Cassidy");
+                    menuJoueur(Cassidy, McCree);
+                } 
+                McCreeTurn = !McCreeTurn;
+            }
+            
+            println("partie finie !!!!!");
+            
+            if(Cassidy.HP <= 0 ){
+                println("Bravo McCree, tu as repris ta vrai place du King du FarWest. Le jeune part comme si il n'était jamais venu");
+            }else{
+                println("Bravo Cassidy, tu garde la place du King. L'ancien retourne dans sa tombe");
+            }
+            sleep(7000);
         }
              
             

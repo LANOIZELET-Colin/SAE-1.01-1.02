@@ -13,7 +13,7 @@ Au départ, vous avez 100 points de vie.
 
 - Vous ne pouvez faire qu’une seule action par tour donc réfléchissez bien avant d’agir.
 
-- Il faut répondre en UN mot avec une MAJUSCULE donc pas de déterminant, de points ... etc 
-  Ex : Quelle la capitale de la France ? REP : Paris
+- Il faut répondre en UN mot donc pas de déterminant, de points ... etc 
+  Ex : Quelle la capitale de la France ? REP : Paris (paris ou encore PARIS fonctionnent également) 
 
 Appuyer sur entrée pour retourner au menu.
