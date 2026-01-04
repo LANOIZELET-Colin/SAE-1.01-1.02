@@ -8,7 +8,7 @@
 \==========================================/
 
 Bienvenue dans BipBoup ! 
-1. Les règles
+1. Les règles (lis c'est IMPORTANT)
 2. Commencer une partie
 3. Quitter le jeu
 

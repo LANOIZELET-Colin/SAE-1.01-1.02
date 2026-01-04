@@ -1,0 +1,6 @@
+===== TOUR DE {NOM} =====
+Chaque soin est utilisable qu’une seule fois
+1 : Limon D.Va (10 HP)
+2 : La pocket-Mercy (30 HP)
+3 : annuler
+============================

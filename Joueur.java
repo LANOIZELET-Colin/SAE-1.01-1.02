@@ -1,6 +1,6 @@
 class Joueur{
     String nom;
-    int HPmax;
+    int HP_max;
     int HP;
     boolean[] soin;
 
