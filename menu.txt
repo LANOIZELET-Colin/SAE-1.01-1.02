@@ -7,9 +7,13 @@
 ||        |_|                     |_|     ||
 \==========================================/
 
-Bienvenue dans BipBoup ! 
-1. Les règles (lis c'est IMPORTANT)
-2. Commencer une partie
-3. Quitter le jeu
+──────────────────────────────────────────
+ 1️⃣  Règles du jeu
+     (À lire, c’est IMPORTANT !)
 
-Tapez un chiffre pour effectuer une action.
+ 2️⃣  Commencer une partie
+
+ 3️⃣  Quitter le jeu
+──────────────────────────────────────────
+
+➡️ Tapez un chiffre pour choisir une option

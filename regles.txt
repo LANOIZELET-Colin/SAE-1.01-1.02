@@ -1,19 +1,35 @@
-﻿Très bien, alors voici les règles : 
+﻿🎮 Voici les règles du jeu :
 
-BipBoup est un jeu tour par tour à deux joueurs où le but est d’éliminer le joueur adverse à l’aide d’un pistolet.
-Au départ, vous avez 100 points de vie. 
+BipBoup est un jeu tour par tour pour deux joueurs où le but est d’éliminer votre adversaire à l’aide d’un pistolet.
+Au début de la partie, chaque joueur commence avec 100 points de vie.
 
-- Lors du tour d’un joueur, il doit répondre à une question le plus rapidement possible. 
 
-- Le temps de réponse définit la valeur des dégâts. Plus il répond rapidement, plus il fait des dégâts. Vous avez 20 secondes maximum.
+⚔️ Déroulement d’un tour :
 
-- Une mauvaise réponse ou un temps trop important de réflexion signifie que le joueur rate son tir. 
+1. Répondez à une question le plus rapidement possible.
 
-- Vous pouvez également vous soigner à l’aide d'objets utilisables qu’une seule fois.
+2. Les questions ont 3 niveaux de difficulté : plus la question est difficile, plus elle inflige de dégâts !
 
-- Vous ne pouvez faire qu’une seule action par tour donc réfléchissez bien avant d’agir.
+3. Le temps de réponse compte : plus vous répondez vite, plus les dégâts sont élevés. Attention à bien jauger entre difficulté et temps de réponse  !
 
-- Il faut répondre en UN mot donc pas de déterminant, de points ... etc 
-  Ex : Quelle la capitale de la France ? REP : Paris (paris ou encore PARIS fonctionnent également) 
+4. Échec ou lenteur : une mauvaise réponse ou un temps trop long signifie que le tir rate sa cible.
 
-Appuyer sur entrée pour retourner au menu.
+
+💊 Objets :
+
+1. Vous pouvez utiliser des objets pour vous soigner, mais chaque objet ne peut être utilisé qu’une seule fois.
+
+2. Une seule action par tour : attaquer ou utiliser un objet, choisissez bien !
+
+
+📝 Réponse aux questions :
+
+⚠️ Répondez en UN mot seulement (sans déterminant, points, etc.).
+
+Par exemple :
+
+Question : Quelle est la capitale de la France ?
+
+Réponse correcte : Paris
+
+➡️ Appuyez sur Entrée pour retourner au menu

@@ -1,6 +1,12 @@
-===== TOUR DE <<Joueur.nom>> =====
+====== TOUR DE {NOM} ======
+
 Actions disponibles :
-1. Attaquer
-2. Se soigner
-HP : <<Joueur.HP>>
-============================
+
+ 1️⃣  Attaquer
+ 2️⃣  Se soigner
+
+HP : {HP}
+
+===========================
+
+➡️ Tapez un chiffre pour choisir une action

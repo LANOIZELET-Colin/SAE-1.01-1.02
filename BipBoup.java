@@ -8,7 +8,7 @@ remplacer(string s, string avant, string apres)
 
 class BipBoup extends Program{
 
-   
+
 // Création et paramètrage des joueurs
    
 
@@ -83,8 +83,35 @@ class BipBoup extends Program{
 // Fonction principal de la partie
    
     void poserQuestion(Joueur j_actuel, Joueur j_autre){
-        int damage = 20;
-        int numQuestion = random(0,rowCount(QuestionsFile)-1);
+        int choix;
+        int degats;
+
+        do {
+            afficher("menuQuestion");
+            choix = readInt()
+        } while {choix < 1 && choix > 3}
+
+        String difficulte = "";
+        if (equals(choix, "1")) {difficulte = "facile"; degats = 10;}
+        if (equals(choix, "2")) {difficulte = "moyen"; degats = 20;}
+        if (equals(choix, "3")) {difficulte = "difficile"; degats = 30;}
+
+        int[] indices = new int[rowCount(QuestionsFile)];
+        int nbQuestions = 0;
+        for (int i = 0; i < rowCount(QuestionsFile); i++){
+            if (equals(getCell(QuestionsFile, i, 2), difficulte) && !dejaPosee[i]){
+                indices[nbQuestions] = i;
+                nbQuestions++;
+            }
+        }
+        
+        if (nbQuestions == 0){
+            println("Il n'y a plus de questions disponibles pour cette difficulté !");
+            return poserQuestion(j_actuel, j_autre);
+        }
+
+        int numQuestion = random(0,nbQuestions-1);
+        dejaPosee[numQuestion] = true;
         String question = getCell(QuestionsFile, numQuestion, 0);
         String answer = getCell(QuestionsFile, numQuestion, 1);
         println("PRET ?");
@@ -174,13 +201,31 @@ class BipBoup extends Program{
                     sleep(2000);
                     menuSoin(j_actuel,j_autre);
                 }
-            }else if (equals(choix,"3")){
+            } else if (equals(choix, "3")){
+                if(j_actuel.soin[2] == true){
+                    j_actuel.HP += 50;
+                    if(j_actuel.HP > j_actuel.HP_max){
+                        j_actuel.HP = 100;
+                    }
+                    j_actuel.soin[2] = false;
+                    println("Vous vous endormez comme Ronflex. J'espère que vous pourrez vous réveiller sans l'aide de la pokeflute !");
+                    println("vous récupéré 50HP, mais vous ne pourrez pas jouer au prochain tour. ("+j_actuel.HP+" restants)");
+
+                    sleep(3000);
+                }else{
+                    println("Vous êtes insomniaque, impossible de vous reposer.");
+                    sleep(2000);
+                    menuSoin(j_actuel,j_autre);
+                }
+                McCreeTurn = !McCreeTurn;
+            }
+            else if (equals(choix,"4")){
                 menuJoueur(j_actuel, j_autre);
             }else{
                 println("Veuillez choisir un chiffre entre 1 et 2");
                 sleep(1000);
                 }
-        } while ( (!equals(choix,"1")) && (!equals(choix,"2")) && (!equals(choix,"3")) );
+        } while ( (!equals(choix,"1")) && (!equals(choix,"2")) && (!equals(choix,"3")) && (!equals(choix,"4")) );
 
     }
 
@@ -193,12 +238,7 @@ class BipBoup extends Program{
         
         do {
             nettoyageTerminal();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-            println("===== TOUR DE "+j_actuel.nom+" ====="); // à mettre dans un fichier, sans forcément cette ligne
-            println("Actions disponibles :");
-            println("1. Attaquer");
-            println("2. Se soigner");
-            println("HP : "+j_actuel.HP);
-            println("============================");
+            afficher("menuTour")
 
             choix = readString();
             if (equals(choix,"1")){
@@ -220,6 +260,7 @@ class BipBoup extends Program{
 // Programme principale     
 
     void algorithm(){
+        boolean[] dejaPosee = new boolean[rowCount(QuestionsFile)];
         while(true){
             Joueur McCree = nouvJoueur("McCree", 100, 100, new boolean[]{true, true});
             Joueur Cassidy = nouvJoueur("Cassidy", 100, 100, new boolean[]{true, true});

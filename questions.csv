@@ -1,41 +1,100 @@
-Quel est le plus petit nombre premier ?,2
-Quel est le continent où se trouve la France ?,europe
-Quel est l’élément chimique symbolisé par O ?,oxygène
-Comment s'appelle la figure à trois côtés ?,triangle
-Quel est le résultat de 15+ 401 ?,416
-Quel est le nom de la planète bleue ?,terre
-Quel est le contraire de « rapide » ?,lent
-Quel est le métal utilisé pour fabriquer des canettes ?,aluminium
-Quel est le nom du satellite naturel de la Terre ?,lune
-Quelle est la note de musique la plus grave ?,do
-Quelle est la planète la plus proche du Soleil ?,mercure
-Quel est le résultat de 7 × 8 ?,56
-Quelle est la capitale de l’Italie ?,rome
-Quel est le nom du gaz que les plantes rejettent ?,oxygène
-Combien de côtés a un hexagone ?,six
-Quel est le contraire de « chaud » ?,froid
-Quelle est la formule chimique du dioxyde de carbone ?,co2
-En quelle année a commencé la Révolution française ?,1789
-Quel est le plus grand océan du monde ?,pacifique
-Quel est l’animal symbole de la France ?,coq
-Quel est le résultat de 12² ?,144
-Quelle est la langue la plus parlée au monde ?,anglais
-Quel est l’organe principal de la respiration ?,poumons
-Comment s’appelle un angle de plus de 90° ?,obtus
-Quel est le nom du roi Soleil ?,louisxiv
-Quelle est l’unité de mesure de l’intensité électrique ?,ampère
-Quel est le participe passé du verbe « écrire » ?,écrit
-Quelle est la plus grande planète du système solaire ?,jupiter
-Quel est le résultat de 100 ÷ 4 ?,25
-Quelle est la couche externe de la Terre ?,croûte
-Quel est le nom du triangle ayant deux côtés égaux ?,isocèle
-Quelle est la valeur de π arrondie à deux décimales (écrit avec un . au lieu d'une virgule)?,3.14
-Quel est le fleuve qui traverse Paris ?,seine
-Quel est l’état de l’eau à 0°C ?,solide
-Quel est le nom de la guerre de 1914-1918 ?,mondiale
-Quel est le symbole chimique du fer ?,fe
-Quelle est la note après le sol ?,la
-Quel est le résultat de 9³ ?,729
-Quel est le nom du vent chaud du Sahara ?,sirocco
-Quelle est la figure géométrique sans côtés ?,cercle
+Quel est le plus petit nombre premier ?,2,facile
+Quel est le continent où se trouve la France ?,europe,facile
+Quel est l’élément chimique symbolisé par O ?,oxygène, facile
+Comment s'appelle la figure à trois côtés ?,triangle,facile
+Quel est le résultat de 15+ 401 ?,416,facile
+Quel est le nom de la planète bleue ?,terre,facile
+Quel est le contraire de « rapide » ?,lent,facile
+Quel est le nom du satellite naturel de la Terre ?,lune,facile
+Quelle est la figure géométrique sans côtés ?,cercle,facile
+Quelle est la planète la plus proche du Soleil ?,mercure, facile
+Quel est le résultat de 7 × 8 ?,56,facile
+Quelle est la capitale de l’Italie ?,rome,facile
+Combien de côtés a un hexagone ?,six,facile
+Quel est le contraire de « chaud » ?,froid,facile
+Quelle est la formule chimique du dioxyde de carbone ?,co2,facile
+En quelle année a commencé la Révolution française ?,1789,facile
+Quel est le plus grand océan du monde ?,pacifique,facile
+Quel est l’animal symbole de la France ?,coq,facile
+Quel est le résultat de 12² ?,144,facile
+Quelle est la langue la plus parlée au monde ?,anglais,facile
+Quel est l’organe principal de la respiration ?,poumons,facile
+Quel est le nom du roi Soleil ?,louisxiv,facile
+Quelle est l’unité de mesure de l’intensité électrique ?,ampère,facile
+Quel est le participe passé du verbe « écrire » ?,écrit,facile
+Quel est le résultat de 100 ÷ 4 ?,25,facile
+Quel est le nom du triangle ayant deux côtés égaux ?,isocèle,facile
+Quelle est la valeur de π arrondie à deux décimales (écrit avec un . au lieu d'une virgule)?,3.14,facile
+Quel est le fleuve qui traverse Paris ?,seine,facile
+Quel est l’état de l’eau à 0°C ?,solide,facile
+Quel est le nom de la guerre de 1947-1991 ?,froide,facile
+Quelle est la note après le sol ?,la,facile
+Quelle couleur obtient-on en mélangeant le rouge et le bleu ?,violet,facile
+Quel est le plus petit nombre entier positif ?,1,facile
+Quel est l’instrument de musique à cordes pincées le plus courant ?,guitare,facile
+Quel est l’animal qui miaule ?,chat,facile
+Combien de jours y a-t-il dans une semaine ?,7,facile
+Quel est le symbole chimique de l’or ?,au,facile
+Quelle saison vient après l’hiver ?,printemps,facile
+Quel est le principal gaz que nous respirons ?,azote,facile
+Comment s’appelle la capitale de la France ?,paris,facile
+Combien de doigts a une main ?,5,facile
+Combien de continents y a-t-il sur Terre ?,7,facile
 
+Quel est le métal utilisé pour fabriquer des canettes ?,aluminium, moyen
+Quelle est la couche externe de la Terre ?,croûte,moyen
+Quelle est la plus grande planète du système solaire ?,jupiter,moyen
+Quel est le nom du gaz que les plantes rejettent ?,oxygène,moyen
+Quelle est la note de musique la plus grave ?,do,moyen
+Comment s’appelle un angle de plus de 90° ?,obtus,moyen
+Quel est le symbole chimique du fer ?,fe,moyen
+Quelle est la formule chimique de l’eau ?,h2o,moyen
+Combien de faces possède un cube ?,six,moyen
+Quelle est la capitale du Canada ?,ottawa,moyen
+Quel est le plus long fleuve du monde ?,nil,moyen
+Quel est le symbole chimique de l’or ?,au,moyen
+Quelle est la valeur de 5! (factorielle) ?,120,moyen
+Quel est le plus petit nombre premier impair ?,3,moyen
+Quelle est la langue officielle du Brésil ?,portugais,moyen
+Quel est l’astre autour duquel tourne la Terre ?,soleil,moyen
+Quelle est l’unité de mesure de la fréquence ?,hertz,moyen
+Quel est le nom du solide ayant 4 faces triangulaires ?,tétraèdre,moyen
+Quel est le résultat de 2⁸ ?,256,moyen
+Quelle est la capitale de l’Australie ?,canberra,moyen
+Quel est le plus grand désert chaud du monde ?,sahara,moyen
+Quelle est la planète connue pour ses anneaux ?,saturne,moyen
+Quelle planète est surnommée la planète rouge ?,mars,moyen
+Combien de faces a un prisme à base triangulaire ?,5,moyen
+Quel est le symbole chimique de l’argent ?,ag,moyen
+Quelle est la distance parcourue par la lumière en une seconde ?,300000 km,moyen
+Combien de côtés a un décagone ?,10,moyen
+Quel est le nom du gaz qui permet aux ballons de monter ?,hélium,moyen
+Quelle est la capitale de l’Allemagne ?,berlin,moyen
+Quel est le plus grand océan après le Pacifique ?,atlantique,moyen
+Quel est le nom du plus grand organe du corps humain ?,peau,moyen
+Combien de notes y a-t-il dans une gamme diatonique ?,7,moyen
+
+Quel est le résultat de 9³ ?,729,difficile
+Quel est le nom du vent chaud du Sahara ?,sirocco,difficile
+Quelle est la racine carrée de 169 ?,13,difficile
+Quel est le nombre de côtés d’un dodécagone ?,douze,difficile
+Quel est le nom du théorème reliant les côtés d’un triangle rectangle ?,pythagore,difficile
+Quel est le résultat de 7³ ?,343,difficile
+Quelle est la dérivée de x² ?,2x,difficile
+Quel est l’organe produisant l’insuline ?,pancréas,difficile
+Quel est le symbole chimique du potassium ?,k,difficile
+Quelle est la valeur de π arrondie à trois décimales ?,3.142,difficile
+Quel est le nombre de diagonales d’un carré ?,2,difficile
+Quelle est la planète la plus dense du système solaire ?,terre,difficile
+Quel est le logarithme décimal de 1000 ?,3,difficile
+Quel est le nombre de faces d’un icosaèdre ?,20,difficile
+Quel est le résultat de 12³ ?,1728,difficile
+Quel mathématicien a inventé le calcul différentiel ?,leibniz,difficile
+Quelle est la formule chimique du sulfate de cuivre ?,cuso4,difficile
+Quel est le nom du triangle dont tous les côtés sont différents ?,scalène,difficile
+Combien de côtés a un hendécagone ?,11,difficile
+Quelle est la vitesse de la lumière en km/s ?,300000,difficile
+Quel est le nombre de chromosomes chez l’être humain ?,46,difficile
+Quelle est la planète la plus massive du système solaire ?,jupiter,difficile
+Quelle est la dérivée de cos(x) ?,−sin(x),difficile
+Quel est le nom de l’élément chimique dont le symbole est Na ?,sodium,difficile
