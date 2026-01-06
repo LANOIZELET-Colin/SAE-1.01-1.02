@@ -8,6 +8,8 @@ remplacer(string s, string avant, string apres)
 
 class BipBoup extends Program{
 
+    boolean[] dejaPosee = new boolean[nbLignes("questions.csv")];
+    boolean TourMcCree;
 
 // Création et paramètrage des joueurs
    
@@ -36,7 +38,7 @@ class BipBoup extends Program{
         return lignes;
     }
 
-    void afficher(String file){
+    void afficher(String file, Joueur j_actuel){
         File fichier = newFile(file);
         String ligne;
         for (int i=0; i<nbLignes(file); i++){
@@ -87,14 +89,14 @@ class BipBoup extends Program{
         int degats;
 
         do {
-            afficher("menuQuestion");
-            choix = readInt()
-        } while {choix < 1 && choix > 3}
+            afficher("menuQuestion", j_actuel);
+            choix = readInt();
+        } while (choix < 1 && choix > 3);
 
         String difficulte = "";
-        if (equals(choix, "1")) {difficulte = "facile"; degats = 10;}
-        if (equals(choix, "2")) {difficulte = "moyen"; degats = 20;}
-        if (equals(choix, "3")) {difficulte = "difficile"; degats = 30;}
+        if (choix == 1) {difficulte = "facile"; degats = 10;}
+        else if (choix == 2) {difficulte = "moyen"; degats = 20;}
+        else {difficulte = "difficile"; degats = 30;}
 
         int[] indices = new int[rowCount(QuestionsFile)];
         int nbQuestions = 0;
@@ -106,29 +108,29 @@ class BipBoup extends Program{
         }
         
         if (nbQuestions == 0){
-            println("Il n'y a plus de questions disponibles pour cette difficulté !");
+            println("Il n'y a plus de questions disponibles pour cette difficulté, choisissez-en une autre !");
             return poserQuestion(j_actuel, j_autre);
         }
 
         int numQuestion = random(0,nbQuestions-1);
         dejaPosee[numQuestion] = true;
         String question = getCell(QuestionsFile, numQuestion, 0);
-        String answer = getCell(QuestionsFile, numQuestion, 1);
+        String reponse = getCell(QuestionsFile, numQuestion, 1);
         println("PRET ?");
         sleep(3000);
         println("GOOOOOOO !");
         println(question);
         long débutCompt = getTime(); 
-        String j_Answer = toLowerCase(readString());
+        String j_reponse = toLowerCase(readString());
         long finCompt = getTime();
-        double timeCompt = (finCompt - débutCompt)/(double)1000; 
-        if(equals(j_Answer, answer)){
-            damage = 20 - (int)timeCompt;
-            j_autre.HP -= damage;
-            println("Bravo, tu as mis "+ timeCompt +" secondes à répondre");
-            println("Tu infliges "+ damage +" dégâts à ton adversaire !");
+        double tempsCompt = (finCompt - débutCompt)/(double)1000; 
+        if(equals(j_reponse, reponse)){
+            degats = degats - (int)tempsCompt;
+            j_autre.HP -= degats;
+            println("Bravo, tu as mis "+ tempsCompt +" secondes à répondre");
+            println("Tu infliges "+ degats +" dégâts à ton adversaire !");
         }else{
-            println("Oh non ! Ce n'était pas la bonne réponse ! \nTu aurais du répondre : " + answer);
+            println("Oh non ! Ce n'était pas la bonne réponse ! \nTu aurais du répondre : " + reponse);
         }
         sleep(5000);
         
@@ -179,12 +181,12 @@ class BipBoup extends Program{
                     }
                     j_actuel.soin[0] = false;
                     println("Vous prenez une bonne grosse gorgé de limon D.Va");
-                    println("vous récupéré 10HP ("+j_ACTUEL.HP+" restants)");
+                    println("vous récupéré 10HP ("+j_actuel.HP+" restants)");
                     sleep(3000);
                 }else{
                     println("vous en avez plus, dommage");
                     sleep(2000);
-                    menuSoin(j_ACTUEL,j_autre);
+                    menuSoin(j_actuel,j_autre);
                 }
             } else if (equals(choix,"2")){
                 if(j_actuel.soin[1] == true){
@@ -217,7 +219,7 @@ class BipBoup extends Program{
                     sleep(2000);
                     menuSoin(j_actuel,j_autre);
                 }
-                McCreeTurn = !McCreeTurn;
+                TourMcCree = !TourMcCree;
             }
             else if (equals(choix,"4")){
                 menuJoueur(j_actuel, j_autre);
@@ -238,7 +240,7 @@ class BipBoup extends Program{
         
         do {
             nettoyageTerminal();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-            afficher("menuTour")
+            afficher("menuTour", j_actuel);
 
             choix = readString();
             if (equals(choix,"1")){
@@ -260,19 +262,18 @@ class BipBoup extends Program{
 // Programme principale     
 
     void algorithm(){
-        boolean[] dejaPosee = new boolean[rowCount(QuestionsFile)];
         while(true){
-            Joueur McCree = nouvJoueur("McCree", 100, 100, new boolean[]{true, true});
-            Joueur Cassidy = nouvJoueur("Cassidy", 100, 100, new boolean[]{true, true});
+            Joueur McCree = nouvJoueur("McCree", 100, 100, new boolean[]{true, true, true});
+            Joueur Cassidy = nouvJoueur("Cassidy", 100, 100, new boolean[]{true, true, true});
             String choix;
             do {
                 nettoyageTerminal();
-                afficher("menu.txt");
+                afficher("menu.txt", McCree);
 
                 choix = readString();
                 if (equals(choix,"1")){
                     print("\033[H\033[2J");   
-                    afficher("regles.txt");               
+                    afficher("regles.txt", McCree);               
                     readString();
                 }else if (equals(choix,"2")){
                 }else if (equals(choix,"3")){
@@ -285,18 +286,18 @@ class BipBoup extends Program{
 
             println("Tout d’abord, décidez vous qui incarnera McCree ou Cassidy (Pas de bagarre, ce n’est qu’un nom provisoire)");
             println("Maintenant, on va lancer des dés pour déterminer qui commencera.");
-            boolean McCreeTurn = ChoixDuPremierJoueur();
+            boolean TourMcCree = ChoixDuPremierJoueur();
             sleep(3000);            
             while(!(Cassidy.HP <= 0 || McCree.HP <= 0)){
                 nettoyageTerminal();
-                if(McCreeTurn == true){
+                if(TourMcCree == true){
                     println("C'est au tour de McCree");
                     menuJoueur(McCree, Cassidy);
                 }else{
                     println("C'est au tour de Cassidy");
                     menuJoueur(Cassidy, McCree);
                 } 
-                McCreeTurn = !McCreeTurn;
+                TourMcCree = !TourMcCree;
             }
             
             println("partie finie !!!!!");
