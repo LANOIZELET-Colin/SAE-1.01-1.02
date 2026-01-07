@@ -3,4 +3,5 @@ class Joueur{
     int HP_max;
     int HP;
     boolean[] soin;
+    boolean ReposUtilisé;
 }

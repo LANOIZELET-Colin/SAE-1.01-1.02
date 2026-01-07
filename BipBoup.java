@@ -12,6 +12,7 @@ class BipBoup extends Program{
     boolean TourMcCree;
     CSVFile QuestionsFile = loadCSV("questions.csv");
     boolean[] dejaPosee;
+    boolean Repos = false;
 
 // Création et paramètrage des joueurs
    
@@ -78,6 +79,14 @@ class BipBoup extends Program{
     }
 
     
+// Fonction qui permet de passer le prochain tour quand Repos est utilisé.
+
+    void Repos(Joueur j_actuel){
+        j_actuel.ReposUtilisé = false;
+        ChangementJoueur();
+    }
+
+
 
 // Fonction principal de la partie
    
@@ -145,6 +154,12 @@ class BipBoup extends Program{
     }
 
    
+    // Permet de changer de joueur actuel
+
+    void ChangementJoueur(){
+        TourMcCree = !TourMcCree;
+    }
+
 
     // détermine quel joueur commence en fonction de la valeur des dés
    
@@ -219,17 +234,14 @@ class BipBoup extends Program{
                     j_actuel.soin[2] = false;
                     println("Vous vous endormez comme Ronflex. J'espère que vous pourrez vous réveiller sans l'aide de la pokeflute !");
                     println("vous récupéré 50HP, mais vous ne pourrez pas jouer au prochain tour. ("+j_actuel.HP+" restants)");
-
+                    j_actuel.ReposUtilisé = true;
                     sleep(3000);
                 }else{
                     println("Vous êtes insomniaque, impossible de vous reposer.");
                     sleep(2000);
                 }
-                TourMcCree = !TourMcCree;
             }
-            else if (equals(choix,"4")){
-                menuJoueur(j_actuel, j_autre);
-            }else{
+            else if (equals(choix,4)){
                 println("Veuillez choisir un chiffre entre 1 et 4");
                 sleep(1000);
                 }
@@ -243,7 +255,6 @@ class BipBoup extends Program{
     void menuJoueur(Joueur j_actuel, Joueur j_autre){
         String choix;
         
-        
         do {
             nettoyageTerminal();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
             afficher("menuTour.txt", j_actuel);
@@ -254,11 +265,10 @@ class BipBoup extends Program{
             }else if (equals(choix,"2")){
                 menuSoin(j_actuel, j_autre);
             }else{
-            println("Veuillez choisir un chiffre entre 1 et 2");
-            sleep(1000);
-                }
+                println("Veuillez choisir un chiffre entre 1 et 2");
+                sleep(1000);
+            }
         } while ( (!equals(choix,"2")) && (!equals(choix,"1"))  );
-        
     }
     
 
@@ -277,7 +287,7 @@ class BipBoup extends Program{
 
                 choix = readString();
                 if (equals(choix,"1")){
-                    print("\033[H\033[2J");   
+                    nettoyageTerminal();   
                     afficher("regles.txt", McCree);               
                     readString();
                 }else if (equals(choix,"2")){
@@ -302,7 +312,7 @@ class BipBoup extends Program{
                     println("C'est au tour de Cassidy");
                     menuJoueur(Cassidy, McCree);
                 } 
-                TourMcCree = !TourMcCree;
+                ChangementJoueur();
             }
             
             println("partie finie !!!!!");
