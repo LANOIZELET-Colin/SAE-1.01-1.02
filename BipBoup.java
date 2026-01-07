@@ -2,8 +2,10 @@ import extensions.File;
 import extensions.CSVFile;
 
 
-/*placeholder pour les fichier => "Tour de <<NomJoueur>>"
-remplacer(string s, string avant, string apres)
+/*problèmes à régler (écris ici pour pas qu'on oublie) : 
+
+- 
+
 */
 
 class BipBoup extends Program{
@@ -78,14 +80,21 @@ class BipBoup extends Program{
         print("\033[H\033[2J");
     }
 
-    
-// Fonction qui permet de passer le prochain tour quand Repos est utilisé.
 
-    void Repos(Joueur j_actuel){
-        j_actuel.ReposUtilisé = false;
-        ChangementJoueur();
+
+// Animations
+
+    void animationRepos(String nom){
+        nettoyageTerminal();
+        println(nom + " s'endort...");
+        sleep(600);
+        println("Z");
+        sleep(500);
+        println("Z Z");
+        sleep(500);
+        println("Z Z Z");
+        sleep(800);
     }
-
 
 
 // Fonction principal de la partie
@@ -139,15 +148,21 @@ class BipBoup extends Program{
 
                 if (equals(j_reponse, getCell(QuestionsFile, numQuestion, 1))) {
                     degats -= (int) tempsCompt;
-                    if (j_autre.HP < 0){ j_autre.HP = 0;}
-                    println("Bravo, tu as mis " + tempsCompt + " secondes à répondre");
-                    println("Tu infliges " + degats + " dégâts à ton adversaire !");
+                    if (degats < 0) {degats = 0;}
+                    j_autre.HP -= degats;
+                    if (j_autre.HP < 0){ 
+                        j_autre.HP = 0; 
+                        println("Vous avez mis trop de temps à répondre, votre tir est raté !");
+                    } else {
+                        println("Bravo, tu as mis " + tempsCompt + " secondes à répondre");
+                        println("Tu infliges " + degats + " dégâts à ton adversaire !");
+                    }
                 } else {
                     println("Oh non ! Ce n'était pas la bonne réponse !");
                     println("Tu aurais du répondre : " + getCell(QuestionsFile, numQuestion, 1));
                 }
 
-                sleep(5000);
+                sleep(3000);
                 questionTrouvee = true;
             }
         }
@@ -186,11 +201,37 @@ class BipBoup extends Program{
     }
 
 
+    // Détermine qui est le joueur qui va jouer son tour
+
+    void JoueurActuel(Joueur McCree, Joueur Cassidy){
+        nettoyageTerminal();
+        if(TourMcCree == true){
+            if (McCree.sommeil){
+                println("McCree se repose et passe son tour !");
+                McCree.sommeil = false;
+                sleep(2000);
+            } else{
+                println("C'est au tour de McCree");
+                menuJoueur(McCree, Cassidy);
+            }
+        }else{
+            if (Cassidy.sommeil){
+                println("Cassidy se repose et passe son tour !");
+                Cassidy.sommeil = false;
+                sleep(2000);
+            } else{
+                println("C'est au tour de Cassidy");
+                menuJoueur(Cassidy, McCree);
+            }
+        } 
+    }
+
+    
     // affiche le menu des soin depuis le menu du joueur
 
 
     void menuSoin(Joueur j_actuel, Joueur j_autre){
-
+        boolean utilisé = false;
         String choix;
         
          do {
@@ -210,6 +251,7 @@ class BipBoup extends Program{
                 }else{
                     println("vous en avez plus, dommage");
                     sleep(2000);
+                    utilisé = true;
                 }
             } else if (equals(choix,"2")){
                 if(j_actuel.soin[1] == true){
@@ -224,6 +266,7 @@ class BipBoup extends Program{
                 }else{
                     println("la ange a quitté la partie, courage");
                     sleep(2000);
+                    utilisé = true;
                 }
             } else if (equals(choix, "3")){
                 if(j_actuel.soin[2] == true){
@@ -232,13 +275,15 @@ class BipBoup extends Program{
                         j_actuel.HP = 100;
                     }
                     j_actuel.soin[2] = false;
+                    animationRepos(j_actuel.nom);
                     println("Vous vous endormez comme Ronflex. J'espère que vous pourrez vous réveiller sans l'aide de la pokeflute !");
                     println("vous récupéré 50HP, mais vous ne pourrez pas jouer au prochain tour. ("+j_actuel.HP+" restants)");
-                    j_actuel.ReposUtilisé = true;
+                    j_actuel.sommeil = true;
                     sleep(3000);
                 }else{
                     println("Vous êtes insomniaque, impossible de vous reposer.");
                     sleep(2000);
+                    utilisé = true;
                 }
             }
             else if (equals(choix,"4")){
@@ -246,9 +291,8 @@ class BipBoup extends Program{
             } else {
                 println("Veuillez choisir un chiffre entre 1 et 4");
                 sleep(1000);
-            }
-                
-        } while ( (!equals(choix,"1")) && (!equals(choix,"2")) && (!equals(choix,"3")) && (!equals(choix,"4")) );
+            }                
+        } while ((!equals(choix,"1")) && (!equals(choix,"2")) && (!equals(choix,"3")) && (!equals(choix,"4")) || utilisé);
 
     }
 
@@ -257,7 +301,6 @@ class BipBoup extends Program{
 
     void menuJoueur(Joueur j_actuel, Joueur j_autre){
         String choix;
-        
         do {
             nettoyageTerminal();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
             afficher("menuTour.txt", j_actuel);
@@ -287,7 +330,6 @@ class BipBoup extends Program{
             do {
                 nettoyageTerminal();
                 afficher("menu.txt", McCree);
-
                 choix = readString();
                 if (equals(choix,"1")){
                     nettoyageTerminal();   
@@ -301,24 +343,19 @@ class BipBoup extends Program{
                 sleep(1000);
                     }
             } while (!equals(choix,"2"));
-
+            nettoyageTerminal();
             println("Tout d’abord, décidez vous qui incarnera McCree ou Cassidy (Pas de bagarre, ce n’est qu’un nom provisoire)");
             println("Maintenant, on va lancer des dés pour déterminer qui commencera.");
             TourMcCree = ChoixDuPremierJoueur();
-            sleep(3000);            
+            sleep(3000);
+
             while(!(Cassidy.HP <= 0 || McCree.HP <= 0)){
                 nettoyageTerminal();
-                if(TourMcCree == true){
-                    println("C'est au tour de McCree");
-                    menuJoueur(McCree, Cassidy);
-                }else{
-                    println("C'est au tour de Cassidy");
-                    menuJoueur(Cassidy, McCree);
-                } 
+                JoueurActuel(McCree, Cassidy);
                 ChangementJoueur();
             }
             
-            println("partie finie !!!!!");
+            println("La partie est terminée !!!!!");
             
             if(Cassidy.HP <= 0 ){
                 println("Bravo McCree, tu as repris ta vrai place du King du FarWest. Le jeune part comme si il n'était jamais venu");
@@ -326,7 +363,6 @@ class BipBoup extends Program{
                 println("Bravo Cassidy, tu garde la place du King. L'ancien retourne dans sa tombe");
             }
             sleep(7000);
-        }
-             
+        }             
     }
 }
