@@ -242,9 +242,12 @@ class BipBoup extends Program{
                 }
             }
             else if (equals(choix,4)){
+                menuJoueur(j_actuel, j_autre);
+            } else {
                 println("Veuillez choisir un chiffre entre 1 et 4");
                 sleep(1000);
-                }
+            }
+                
         } while ( (!equals(choix,"1")) && (!equals(choix,"2")) && (!equals(choix,"3")) && (!equals(choix,"4")) );
 
     }
