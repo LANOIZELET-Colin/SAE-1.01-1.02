@@ -241,7 +241,7 @@ class BipBoup extends Program{
                     sleep(2000);
                 }
             }
-            else if (equals(choix,4)){
+            else if (equals(choix,"4")){
                 menuJoueur(j_actuel, j_autre);
             } else {
                 println("Veuillez choisir un chiffre entre 1 et 4");
