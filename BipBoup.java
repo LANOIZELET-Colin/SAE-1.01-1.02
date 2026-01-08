@@ -176,6 +176,7 @@ class BipBoup extends Program{
         String choix;
         
          do {
+            utilisé = false;
             nettoyageTerminal();   
             afficher("MenuSoin.txt", j_actuel);
             choix = readString();
