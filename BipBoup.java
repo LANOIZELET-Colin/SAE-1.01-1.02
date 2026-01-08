@@ -4,8 +4,9 @@ import extensions.CSVFile;
 
 /*problèmes à régler (écris ici pour pas qu'on oublie) : 
 
-- 
-
+- fin de partie : marque un tir loupé même si il prend en compte les dégats
+- corriger les questions reloue (genre où faut des accents)
+controle de saisie difficulté
 */
 
 class BipBoup extends Program{
@@ -14,7 +15,6 @@ class BipBoup extends Program{
     boolean TourMcCree;
     CSVFile QuestionsFile = loadCSV("questions.csv");
     boolean[] dejaPosee;
-    boolean Repos = false;
 
 // Création et paramètrage des joueurs
    
@@ -99,23 +99,43 @@ class BipBoup extends Program{
 
 // Fonction principal de la partie
    
+    void ChoixMenuPrincipal(Joueur McCree){
+            String choix;
+        do {
+                nettoyageTerminal();
+                afficher("menu.txt", McCree);
+                choix = readString();
+                if (equals(choix,"1")){
+                    nettoyageTerminal();   
+                    afficher("regles.txt", McCree);               
+                    readString();
+                }else if (equals(choix,"2")){
+                }else if (equals(choix,"3")){
+                    System.exit(0);
+                }else{
+                println("Veuillez choisir un chiffre entre 1 et 3");
+                sleep(1000);
+                }
+            } while (!equals(choix,"2"));
+    }
+
     void poserQuestion(Joueur j_actuel, Joueur j_autre) {
 
-        int choix;
+        String choix;
         boolean questionTrouvee = false;
 
         while (!questionTrouvee) {
 
             do {
                 afficher("menuQuestion.txt", j_actuel);
-                choix = readInt();
-            } while (choix < 1 || choix > 3);
+                choix = readString();
+            } while ((!equals(choix,"1")) && (!equals(choix,"2")) && (!equals(choix,"3")));
 
             String difficulte = "";
             int degats = 0;
 
-            if (choix == 1) { difficulte = "facile"; degats = 10; }
-            else if (choix == 2) { difficulte = "moyen"; degats = 20; }
+            if (equals(choix,"1")) { difficulte = "facile"; degats = 10; }
+            else if (equals(choix,"2")) { difficulte = "moyen"; degats = 20; }
             else { difficulte = "difficile"; degats = 30; }
 
             int[] indices = new int[rowCount(QuestionsFile)];
@@ -148,15 +168,14 @@ class BipBoup extends Program{
 
                 if (equals(j_reponse, getCell(QuestionsFile, numQuestion, 1))) {
                     degats -= (int) tempsCompt;
-                    if (degats < 0) {degats = 0;}
-                    j_autre.HP -= degats;
-                    if (j_autre.HP < 0){ 
-                        j_autre.HP = 0; 
+                    if (degats < 0) {
+                        degats = 0;                         
                         println("Vous avez mis trop de temps à répondre, votre tir est raté !");
-                    } else {
+                    } else{
                         println("Bravo, tu as mis " + tempsCompt + " secondes à répondre");
                         println("Tu infliges " + degats + " dégâts à ton adversaire !");
                     }
+                    j_autre.HP -= degats;
                 } else {
                     println("Oh non ! Ce n'était pas la bonne réponse !");
                     println("Tu aurais du répondre : " + getCell(QuestionsFile, numQuestion, 1));
@@ -212,6 +231,7 @@ class BipBoup extends Program{
                 sleep(2000);
             } else{
                 println("C'est au tour de McCree");
+                sleep(1000);
                 menuJoueur(McCree, Cassidy);
             }
         }else{
@@ -221,6 +241,7 @@ class BipBoup extends Program{
                 sleep(2000);
             } else{
                 println("C'est au tour de Cassidy");
+                sleep(1000);
                 menuJoueur(Cassidy, McCree);
             }
         } 
@@ -260,11 +281,11 @@ class BipBoup extends Program{
                         j_actuel.HP = 100;
                     }
                     j_actuel.soin[1] = false;
-                    println("La ange vous apprécie beaucoup (peut-être trop)");
-                    println("vous récupéré 30HP ("+j_actuel.HP+" restants)");
+                    println("Ange vous apprécie beaucoup (peut-être trop)");
+                    println("vous récupérez 30HP ("+j_actuel.HP+" restants)");
                     sleep(3000);
                 }else{
-                    println("la ange a quitté la partie, courage");
+                    println("Ange a quitté la partie, courage");
                     sleep(2000);
                     utilisé = true;
                 }
@@ -277,7 +298,7 @@ class BipBoup extends Program{
                     j_actuel.soin[2] = false;
                     animationRepos(j_actuel.nom);
                     println("Vous vous endormez comme Ronflex. J'espère que vous pourrez vous réveiller sans l'aide de la pokeflute !");
-                    println("vous récupéré 50HP, mais vous ne pourrez pas jouer au prochain tour. ("+j_actuel.HP+" restants)");
+                    println("vous récupérez 50HP, mais vous ne pourrez pas jouer au prochain tour. ("+j_actuel.HP+" restants)");
                     j_actuel.sommeil = true;
                     sleep(3000);
                 }else{
@@ -285,15 +306,13 @@ class BipBoup extends Program{
                     sleep(2000);
                     utilisé = true;
                 }
-            }
-            else if (equals(choix,"4")){
+            } else if (equals(choix,"4")){
                 menuJoueur(j_actuel, j_autre);
             } else {
                 println("Veuillez choisir un chiffre entre 1 et 4");
                 sleep(1000);
             }                
         } while ((!equals(choix,"1")) && (!equals(choix,"2")) && (!equals(choix,"3")) && (!equals(choix,"4")) || utilisé);
-
     }
 
     // affiche le menu du joueur actuel
@@ -326,28 +345,12 @@ class BipBoup extends Program{
         while(true){
             Joueur McCree = nouvJoueur("McCree", 100, 100, new boolean[]{true, true, true});
             Joueur Cassidy = nouvJoueur("Cassidy", 100, 100, new boolean[]{true, true, true});
-            String choix;
-            do {
-                nettoyageTerminal();
-                afficher("menu.txt", McCree);
-                choix = readString();
-                if (equals(choix,"1")){
-                    nettoyageTerminal();   
-                    afficher("regles.txt", McCree);               
-                    readString();
-                }else if (equals(choix,"2")){
-                }else if (equals(choix,"3")){
-                    System.exit(0);
-                }else{
-                println("Veuillez choisir un chiffre entre 1 et 3");
-                sleep(1000);
-                    }
-            } while (!equals(choix,"2"));
+            ChoixMenuPrincipal(McCree);
             nettoyageTerminal();
             println("Tout d’abord, décidez vous qui incarnera McCree ou Cassidy (Pas de bagarre, ce n’est qu’un nom provisoire)");
             println("Maintenant, on va lancer des dés pour déterminer qui commencera.");
             TourMcCree = ChoixDuPremierJoueur();
-            sleep(3000);
+            sleep(2000);
 
             while(!(Cassidy.HP <= 0 || McCree.HP <= 0)){
                 nettoyageTerminal();

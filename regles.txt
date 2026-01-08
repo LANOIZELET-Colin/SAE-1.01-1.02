@@ -26,6 +26,8 @@ Au début de la partie, chaque joueur commence avec 100 points de vie.
 
 ⚠️ Répondez en UN mot seulement (sans déterminant, points, etc.).
 
+Chaque question demandant un nombre doit être répondue en numérique (par exemple on écrit 12 et non douze.)
+
 Par exemple :
 
 Question : Quelle est la capitale de la France ?
