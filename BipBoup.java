@@ -5,7 +5,7 @@ import extensions.CSVFile;
 /*problèmes à régler (écris ici pour pas qu'on oublie) : 
 
 - corriger les questions reloue (genre où faut des accents)
-
+- Rajouter des tests !!
 */
 
 class BipBoup extends Program{
@@ -19,11 +19,11 @@ class BipBoup extends Program{
    
 
 
-    Joueur nouvJoueur(String nom, int HP_max, int HP, boolean[] soin){
+    Joueur nouvJoueur(String nom, int PV_max, int PV, boolean[] soin){
         Joueur j = new Joueur();
         j.nom = nom;
-        j.HP_max = HP_max;
-        j.HP = HP;
+        j.PV_max = PV_max;
+        j.PV = PV;
         j.soin = soin;
         return j;
     }
@@ -48,7 +48,7 @@ class BipBoup extends Program{
         for (int i=0; i<nbLignes(file); i++){
             ligne = (readLine(fichier));
             ligne = remplace(ligne, "{NOM}", j_actuel.nom);
-            ligne = remplace(ligne, "{HP}", "" + j_actuel.HP);
+            ligne = remplace(ligne, "{PV}", "" + j_actuel.PV);
             println(ligne);
         }
     }
@@ -96,8 +96,10 @@ class BipBoup extends Program{
     }
 
 
-// Fonction principal de la partie
-   
+// Fonctions principales d'affichage de la partie
+    
+    // Choix de menu principal, où l'utilisateur choisit soit les règles, la partie ou la fin du programme.
+
     void ChoixMenuPrincipal(Joueur McCree){
             String choix;
         do {
@@ -117,6 +119,124 @@ class BipBoup extends Program{
                 }
             } while (!equals(choix,"2"));
     }
+
+
+    // Détermine qui est le joueur qui va jouer son tour
+
+
+    void JoueurActuel(Joueur McCree, Joueur Cassidy){
+        nettoyageTerminal();
+        if(TourMcCree == true){
+            if (McCree.sommeil){
+                println("McCree se repose et passe son tour !");
+                McCree.sommeil = false;
+                sleep(2000);
+            } else{
+                menuJoueur(McCree, Cassidy);
+            }
+        }else{
+            if (Cassidy.sommeil){
+                println("Cassidy se repose et passe son tour !");
+                Cassidy.sommeil = false;
+                sleep(2000);
+            } else{
+                menuJoueur(Cassidy, McCree);
+            }
+        } 
+    }
+
+
+    // affiche le menu du joueur actuel, ses actions disponibles et ses points de vie
+
+
+    void menuJoueur(Joueur j_actuel, Joueur j_autre){
+        String choix;
+        do {
+            nettoyageTerminal();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+            afficher("menuTour.txt", j_actuel);
+
+            choix = readString();
+            if (equals(choix,"1")){
+                poserQuestion(j_actuel, j_autre);
+            }else if (equals(choix,"2")){
+                menuSoin(j_actuel, j_autre);
+            }else{
+                println("Veuillez choisir un chiffre entre 1 et 2");
+                sleep(1000);
+            }
+        } while ( (!equals(choix,"2")) && (!equals(choix,"1"))  );
+    }
+
+
+    // affiche le menu des soin depuis le menu du joueur
+
+
+    void menuSoin(Joueur j_actuel, Joueur j_autre){
+        boolean utilisé = false;
+        String choix;
+        
+         do {
+            nettoyageTerminal();   
+            afficher("MenuSoin.txt", j_actuel);
+            choix = readString();
+            if (equals(choix,"1")){
+                if(j_actuel.soin[0] == true){
+                    j_actuel.PV += 10;
+                    if(j_actuel.PV > j_actuel.PV_max){
+                        j_actuel.PV = 100;
+                    }
+                    j_actuel.soin[0] = false;
+                    println("Vous prenez une bonne grosse gorgé de limon D.Va");
+                    println("vous récupéré 10PV ("+j_actuel.PV+" restants)");
+                    sleep(3000);
+                }else{
+                    println("vous en avez plus, dommage");
+                    sleep(2000);
+                    utilisé = true;
+                }
+            } else if (equals(choix,"2")){
+                if(j_actuel.soin[1] == true){
+                    j_actuel.PV += 30;
+                    if(j_actuel.PV > j_actuel.PV_max){
+                        j_actuel.PV = 100;
+                    }
+                    j_actuel.soin[1] = false;
+                    println("Ange vous apprécie beaucoup (peut-être trop)");
+                    println("vous récupérez 30PV ("+j_actuel.PV+" restants)");
+                    sleep(3000);
+                }else{
+                    println("Ange a quitté la partie, courage");
+                    sleep(2000);
+                    utilisé = true;
+                }
+            } else if (equals(choix, "3")){
+                if(j_actuel.soin[2] == true){
+                    j_actuel.PV += 50;
+                    if(j_actuel.PV > j_actuel.PV_max){
+                        j_actuel.PV = 100;
+                    }
+                    j_actuel.soin[2] = false;
+                    animationRepos(j_actuel.nom);
+                    println("Vous vous endormez comme Ronflex. J'espère que vous pourrez vous réveiller sans l'aide de la pokeflute !");
+                    println("vous récupérez 50PV, mais vous ne pourrez pas jouer au prochain tour. ("+j_actuel.PV+" restants)");
+                    j_actuel.sommeil = true;
+                    sleep(3000);
+                }else{
+                    println("Vous êtes insomniaque, impossible de vous reposer.");
+                    sleep(2000);
+                    utilisé = true;
+                }
+            } else if (equals(choix,"4")){
+                menuJoueur(j_actuel, j_autre);
+            } else {
+                println("Veuillez choisir un chiffre entre 1 et 4");
+                sleep(1000);
+            }                
+        } while ((!equals(choix,"1")) && (!equals(choix,"2")) && (!equals(choix,"3")) && (!equals(choix,"4")) || utilisé);
+    }
+
+
+    // Fonction qui permet de trier les questions et de poser la bonne question en fonction de la difficulté + qui calcule et inflige les dégats à l'autre joueur
 
     void poserQuestion(Joueur j_actuel, Joueur j_autre) {
 
@@ -179,7 +299,7 @@ class BipBoup extends Program{
                         println("Bravo, tu as mis " + tempsCompt + " secondes à répondre");
                         println("Tu infliges " + degats + " dégâts à ton adversaire !");
                     }
-                    j_autre.HP -= degats;
+                    j_autre.PV -= degats;
                 } else {
                     println("Oh non ! Ce n'était pas la bonne réponse !");
                     println("Tu aurais du répondre : " + getCell(QuestionsFile, numQuestion, 1));
@@ -192,14 +312,14 @@ class BipBoup extends Program{
     }
 
    
-    // Permet de changer de joueur actuel
+// Permet de changer de joueur actuel
 
     void ChangementJoueur(){
         TourMcCree = !TourMcCree;
     }
 
 
-    // détermine quel joueur commence en fonction de la valeur des dés
+// détermine quel joueur commence en fonction de la valeur des dés
    
 
     boolean ChoixDuPremierJoueur(){
@@ -224,120 +344,6 @@ class BipBoup extends Program{
     }
 
 
-    // Détermine qui est le joueur qui va jouer son tour
-
-    void JoueurActuel(Joueur McCree, Joueur Cassidy){
-        nettoyageTerminal();
-        if(TourMcCree == true){
-            if (McCree.sommeil){
-                println("McCree se repose et passe son tour !");
-                McCree.sommeil = false;
-                sleep(2000);
-            } else{
-                menuJoueur(McCree, Cassidy);
-            }
-        }else{
-            if (Cassidy.sommeil){
-                println("Cassidy se repose et passe son tour !");
-                Cassidy.sommeil = false;
-                sleep(2000);
-            } else{
-                menuJoueur(Cassidy, McCree);
-            }
-        } 
-    }
-
-    
-    // affiche le menu des soin depuis le menu du joueur
-
-
-    void menuSoin(Joueur j_actuel, Joueur j_autre){
-        boolean utilisé = false;
-        String choix;
-        
-         do {
-            nettoyageTerminal();   
-            afficher("MenuSoin.txt", j_actuel);
-            choix = readString();
-            if (equals(choix,"1")){
-                if(j_actuel.soin[0] == true){
-                    j_actuel.HP += 10;
-                    if(j_actuel.HP > j_actuel.HP_max){
-                        j_actuel.HP = 100;
-                    }
-                    j_actuel.soin[0] = false;
-                    println("Vous prenez une bonne grosse gorgé de limon D.Va");
-                    println("vous récupéré 10HP ("+j_actuel.HP+" restants)");
-                    sleep(3000);
-                }else{
-                    println("vous en avez plus, dommage");
-                    sleep(2000);
-                    utilisé = true;
-                }
-            } else if (equals(choix,"2")){
-                if(j_actuel.soin[1] == true){
-                    j_actuel.HP += 30;
-                    if(j_actuel.HP > j_actuel.HP_max){
-                        j_actuel.HP = 100;
-                    }
-                    j_actuel.soin[1] = false;
-                    println("Ange vous apprécie beaucoup (peut-être trop)");
-                    println("vous récupérez 30HP ("+j_actuel.HP+" restants)");
-                    sleep(3000);
-                }else{
-                    println("Ange a quitté la partie, courage");
-                    sleep(2000);
-                    utilisé = true;
-                }
-            } else if (equals(choix, "3")){
-                if(j_actuel.soin[2] == true){
-                    j_actuel.HP += 50;
-                    if(j_actuel.HP > j_actuel.HP_max){
-                        j_actuel.HP = 100;
-                    }
-                    j_actuel.soin[2] = false;
-                    animationRepos(j_actuel.nom);
-                    println("Vous vous endormez comme Ronflex. J'espère que vous pourrez vous réveiller sans l'aide de la pokeflute !");
-                    println("vous récupérez 50HP, mais vous ne pourrez pas jouer au prochain tour. ("+j_actuel.HP+" restants)");
-                    j_actuel.sommeil = true;
-                    sleep(3000);
-                }else{
-                    println("Vous êtes insomniaque, impossible de vous reposer.");
-                    sleep(2000);
-                    utilisé = true;
-                }
-            } else if (equals(choix,"4")){
-                menuJoueur(j_actuel, j_autre);
-            } else {
-                println("Veuillez choisir un chiffre entre 1 et 4");
-                sleep(1000);
-            }                
-        } while ((!equals(choix,"1")) && (!equals(choix,"2")) && (!equals(choix,"3")) && (!equals(choix,"4")) || utilisé);
-    }
-
-    // affiche le menu du joueur actuel
-
-
-    void menuJoueur(Joueur j_actuel, Joueur j_autre){
-        String choix;
-        do {
-            nettoyageTerminal();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-            afficher("menuTour.txt", j_actuel);
-
-            choix = readString();
-            if (equals(choix,"1")){
-                poserQuestion(j_actuel, j_autre);
-            }else if (equals(choix,"2")){
-                menuSoin(j_actuel, j_autre);
-            }else{
-                println("Veuillez choisir un chiffre entre 1 et 2");
-                sleep(1000);
-            }
-        } while ( (!equals(choix,"2")) && (!equals(choix,"1"))  );
-    }
-    
-
-
 // Programme principale     
 
     void algorithm(){
@@ -352,7 +358,7 @@ class BipBoup extends Program{
             TourMcCree = ChoixDuPremierJoueur();
             sleep(2000);
 
-            while(!(Cassidy.HP <= 0 || McCree.HP <= 0)){
+            while(!(Cassidy.PV <= 0 || McCree.PV <= 0)){
                 nettoyageTerminal();
                 JoueurActuel(McCree, Cassidy);
                 ChangementJoueur();
@@ -360,7 +366,7 @@ class BipBoup extends Program{
             
             println("La partie est terminée !!!!!");
             
-            if(Cassidy.HP <= 0 ){
+            if(Cassidy.PV <= 0 ){
                 println("Bravo McCree, tu as repris ta vrai place du King du FarWest. Le jeune part comme si il n'était jamais venu");
             }else{
                 println("Bravo Cassidy, tu garde la place du King. L'ancien retourne dans sa tombe");

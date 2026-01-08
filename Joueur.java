@@ -1,7 +1,7 @@
 class Joueur{
     String nom;
-    int HP_max;
-    int HP;
+    int PV;
+    int PV_max;
     boolean[] soin;
     boolean sommeil;
 }

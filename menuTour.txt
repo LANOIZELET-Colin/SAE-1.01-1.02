@@ -5,7 +5,7 @@ Actions disponibles :
  1️⃣  Attaquer
  2️⃣  Se soigner
 
-HP : {HP}
+PV : {PV}
 
 ===========================
 
