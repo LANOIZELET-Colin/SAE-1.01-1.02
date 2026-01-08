@@ -4,9 +4,8 @@ import extensions.CSVFile;
 
 /*problèmes à régler (écris ici pour pas qu'on oublie) : 
 
-- fin de partie : marque un tir loupé même si il prend en compte les dégats
 - corriger les questions reloue (genre où faut des accents)
-controle de saisie difficulté
+
 */
 
 class BipBoup extends Program{
@@ -127,9 +126,14 @@ class BipBoup extends Program{
         while (!questionTrouvee) {
 
             do {
+                nettoyageTerminal();
                 afficher("menuQuestion.txt", j_actuel);
                 choix = readString();
-            } while ((!equals(choix,"1")) && (!equals(choix,"2")) && (!equals(choix,"3")));
+                if (!equals(choix,"1") && !equals(choix,"2") && !equals(choix,"3")){ 
+                    println("Choisissez un chiffre entre 1 et 3.");
+                    sleep(1000);
+                }
+            } while (!equals(choix,"1") && !equals(choix,"2") && !equals(choix,"3"));
 
             String difficulte = "";
             int degats = 0;
@@ -230,8 +234,6 @@ class BipBoup extends Program{
                 McCree.sommeil = false;
                 sleep(2000);
             } else{
-                println("C'est au tour de McCree");
-                sleep(1000);
                 menuJoueur(McCree, Cassidy);
             }
         }else{
@@ -240,8 +242,6 @@ class BipBoup extends Program{
                 Cassidy.sommeil = false;
                 sleep(2000);
             } else{
-                println("C'est au tour de Cassidy");
-                sleep(1000);
                 menuJoueur(Cassidy, McCree);
             }
         } 
