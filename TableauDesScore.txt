@@ -1,12 +1,12 @@
-🎉================  Tableau Des Score ================🎉
+🎉==================================== Tableau Des Score ===========================================🎉
 
 Joueur  |   Nombre de bonnes réponses   |   Nombre de Tirs Ratés    |  Nombre de dégats infligés
 
-McCree                {M.nb_b}                           {M.nb_t}                    {M.dg}
+McCree                {M.nb_b}                             {M.nb_t}                            {M.dg}
 
 
-Cassidy               {C.nb_b}                           {C.nb_t}                    {C.dg}
+Cassidy               {C.nb_b}                             {C.nb_t}                            {C.dg}
  
-🎉=====================================================🎉
+🎉==================================================================================================🎉
 
 ➡️ Appuyez sur Entrée pour retourner au menu
