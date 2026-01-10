@@ -270,19 +270,19 @@ class BipBoup extends Program{
                 nettoyageTerminal();
                 afficher("menuQuestion.txt", j_actuel);
                 choix = readString();
-                if (!equals(choix,"1") && !equals(choix,"2") && !equals(choix,"3") && !equals(choix,"4")){ 
-                    println("Choisissez un chiffre entre 1 et 4.");
+               
+               if (!equals(choix,"1") && !equals(choix,"2") && !equals(choix,"3")){ 
+                    println("Choisissez un chiffre entre 1 et 3.");
                     sleep(1000);
                 }
-            } while (!equals(choix,"1") && !equals(choix,"2") && !equals(choix,"3") && !equals(choix,"4"));
+            } while (!equals(choix,"1") && !equals(choix,"2") && !equals(choix,"3"));
 
             String difficulte = "";
             int degats = 0;
 
-            if (equals(choix,"1")) { difficulte = "facile"; degats = 15; }
+            if (equals(choix,"1")) { difficulte = "facile"; degats = 10; }
             else if (equals(choix,"2")) { difficulte = "moyen"; degats = 20; }
-            else if (equals(choix,"3")) { difficulte = "difficile"; degats = 30; }
-            else{ menuJoueur(j_actuel, j_autre);}
+            else { difficulte = "difficile"; degats = 30; }
 
             int[] indices = new int[rowCount(QuestionsFile)];
             int nbQuestions = 0;

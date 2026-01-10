@@ -2,11 +2,10 @@
 ====================================================================
 Choisissez une difficulté ! Attention à ne pas vous surestimer !
 
-1️⃣ facile 😊 
+1️⃣  facile 😊 
 
-2️⃣ moyen 😐
+2️⃣  moyen 😐
 
-3️⃣ difficile 😡 
+3️⃣  difficile 😡 
 
-4️⃣  ❌ Annuler
 ====================================================================
