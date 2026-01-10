@@ -6,6 +6,7 @@ import extensions.CSVFile;
 
 - corriger les questions reloue (genre où faut des accents)
 - Rajouter des tests !!
+- essayer de "compresser" le code
 */
 
 class BipBoup extends Program{
@@ -25,11 +26,14 @@ class BipBoup extends Program{
         j.PV_max = PV_max;
         j.PV = PV;
         j.soin = soin;
+        j.degats_totaux = 0;
+        j.nb_bonne_reponse = 0;
+        j.nb_tir_rate = 0;
         return j;
     }
 
 
-// Fonction extenstion.File
+// Fonction extension.File
    
     
     int nbLignes(String nomFichier){
@@ -51,6 +55,23 @@ class BipBoup extends Program{
             ligne = remplace(ligne, "{PV}", "" + j_actuel.PV);
             println(ligne);
         }
+    }
+    
+    void afficherTableauDesScores(Joueur McCree, Joueur Cassidy){
+        nettoyageTerminal();
+        File fichier = newFile("TableauDesScore.txt");
+        String ligne;
+        for (int i=0; i<nbLignes("TableauDesScore.txt"); i++){
+            ligne = (readLine(fichier));
+            ligne = remplace(ligne, "{M.nb_b}", "" + McCree.nb_bonne_reponse);
+            ligne = remplace(ligne, "{M.nb_t}", "" + McCree.nb_tir_rate);
+            ligne = remplace(ligne, "{M.dg}", "" + McCree.degats_totaux);
+            ligne = remplace(ligne, "{C.nb_b}", "" + Cassidy.nb_bonne_reponse);
+            ligne = remplace(ligne, "{C.nb_t}", "" + Cassidy.nb_tir_rate);
+            ligne = remplace(ligne, "{C.dg}", "" + Cassidy.degats_totaux);
+            println(ligne);
+        }
+        readString();
     }
 
 // Fonction qui permet de faire fonctionner les placeholder
@@ -94,7 +115,6 @@ class BipBoup extends Program{
         println("Z Z Z");
         sleep(800);
     }
-
 
 // Fonctions principales d'affichage de la partie
     
@@ -250,18 +270,19 @@ class BipBoup extends Program{
                 nettoyageTerminal();
                 afficher("menuQuestion.txt", j_actuel);
                 choix = readString();
-                if (!equals(choix,"1") && !equals(choix,"2") && !equals(choix,"3")){ 
-                    println("Choisissez un chiffre entre 1 et 3.");
+                if (!equals(choix,"1") && !equals(choix,"2") && !equals(choix,"3") && !equals(choix,"4")){ 
+                    println("Choisissez un chiffre entre 1 et 4.");
                     sleep(1000);
                 }
-            } while (!equals(choix,"1") && !equals(choix,"2") && !equals(choix,"3"));
+            } while (!equals(choix,"1") && !equals(choix,"2") && !equals(choix,"3") && !equals(choix,"4"));
 
             String difficulte = "";
             int degats = 0;
 
-            if (equals(choix,"1")) { difficulte = "facile"; degats = 10; }
+            if (equals(choix,"1")) { difficulte = "facile"; degats = 15; }
             else if (equals(choix,"2")) { difficulte = "moyen"; degats = 20; }
-            else { difficulte = "difficile"; degats = 30; }
+            else if (equals(choix,"3")) { difficulte = "difficile"; degats = 30; }
+            else{ menuJoueur(j_actuel, j_autre);}
 
             int[] indices = new int[rowCount(QuestionsFile)];
             int nbQuestions = 0;
@@ -292,8 +313,10 @@ class BipBoup extends Program{
                 double tempsCompt = (finCompt - debutCompt) / 1000.0;
 
                 if (equals(j_reponse, getCell(QuestionsFile, numQuestion, 1))) {
+                    j_actuel.nb_bonne_reponse += 1;
                     degats -= (int) tempsCompt;
                     if (degats < 0) {
+                        j_actuel.nb_tir_rate += 1;
                         degats = 0;                         
                         println("Vous avez mis trop de temps à répondre, votre tir est raté !");
                     } else{
@@ -301,8 +324,10 @@ class BipBoup extends Program{
                         println("Tu infliges " + degats + " dégâts à ton adversaire !");
                     }
                     j_autre.PV -= degats;
+                    j_actuel.degats_totaux += degats;
                 } else {
-                    println("Oh non ! Ce n'était pas la bonne réponse !");
+                    j_actuel.nb_tir_rate += 1;
+                    println("Oh non ! Ce n'était pas la bonne réponse !, votre tir est raté ");
                     println("Tu aurais du répondre : " + getCell(QuestionsFile, numQuestion, 1));
                 }
 
@@ -348,8 +373,8 @@ class BipBoup extends Program{
 // Programme principale     
 
     void algorithm(){
-        dejaPosee = new boolean[nbLignes("questions.csv")];
         while(true){
+            dejaPosee = new boolean[nbLignes("questions.csv")];
             Joueur McCree = nouvJoueur("McCree", 100, 100, new boolean[]{true, true, true});
             Joueur Cassidy = nouvJoueur("Cassidy", 100, 100, new boolean[]{true, true, true});
             ChoixMenuPrincipal(McCree);
@@ -372,7 +397,9 @@ class BipBoup extends Program{
             }else{
                 println("Bravo Cassidy, tu garde la place du King. L'ancien retourne dans sa tombe");
             }
-            sleep(7000);
+                sleep(2000);
+            
+            afficherTableauDesScores(McCree, Cassidy);
         }             
     }
 }
