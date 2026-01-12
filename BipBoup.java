@@ -13,7 +13,7 @@ class BipBoup extends Program{
 
 
     boolean TourMcCree;
-    CSVFile QuestionsFile = loadCSV("questions.csv");
+    CSVFile QuestionsFile = loadCSV("../ressources/questions.csv");
     boolean[] dejaPosee;
 
 // Création et paramètrage des joueurs
@@ -59,9 +59,9 @@ class BipBoup extends Program{
     
     void afficherTableauDesScores(Joueur McCree, Joueur Cassidy){
         nettoyageTerminal();
-        File fichier = newFile("TableauDesScore.txt");
+        File fichier = newFile("../ressources/TableauDesScore.txt");
         String ligne;
-        for (int i=0; i<nbLignes("TableauDesScore.txt"); i++){
+        for (int i=0; i<nbLignes("../ressources/TableauDesScore.txt"); i++){
             ligne = (readLine(fichier));
             ligne = remplace(ligne, "{M.nb_b}", "" + McCree.nb_bonne_reponse);
             ligne = remplace(ligne, "{M.nb_t}", "" + McCree.nb_tir_rate);
@@ -126,11 +126,11 @@ class BipBoup extends Program{
             String choix;
         do {
                 nettoyageTerminal();
-                afficher("menu.txt", McCree);
+                afficher("../ressources/menu.txt", McCree);
                 choix = readString();
                 if (equals(choix,"1")){
                     nettoyageTerminal();   
-                    afficher("regles.txt", McCree);               
+                    afficher("../ressources/regles.txt", McCree);               
                     readString();
                 }else if (equals(choix,"2")){
                 }else if (equals(choix,"3")){
@@ -175,7 +175,7 @@ class BipBoup extends Program{
         String choix;
         do {
             nettoyageTerminal();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-            afficher("menuTour.txt", j_actuel);
+            afficher("../ressources/menuTour.txt", j_actuel);
 
             choix = readString();
             if (equals(choix,"1")){
@@ -200,7 +200,7 @@ class BipBoup extends Program{
          do {
             utilisé = false;
             nettoyageTerminal();   
-            afficher("MenuSoin.txt", j_actuel);
+            afficher("../ressources/MenuSoin.txt", j_actuel);
             choix = readString();
             if (equals(choix,"1")){
                 if(j_actuel.soin[0] == true){
@@ -270,7 +270,7 @@ class BipBoup extends Program{
 
             do {
                 nettoyageTerminal();
-                afficher("menuQuestion.txt", j_actuel);
+                afficher("../ressources/menuQuestion.txt", j_actuel);
                 choix = readString();
                
                if (!equals(choix,"1") && !equals(choix,"2") && !equals(choix,"3")){ 
@@ -376,7 +376,7 @@ class BipBoup extends Program{
 
     void algorithm(){
         while(true){
-            dejaPosee = new boolean[nbLignes("questions.csv")];
+            dejaPosee = new boolean[nbLignes("../ressources/questions.csv")];
             Joueur McCree = nouvJoueur("McCree", 100, 100, new boolean[]{true, true, true});
             Joueur Cassidy = nouvJoueur("Cassidy", 100, 100, new boolean[]{true, true, true});
             ChoixMenuPrincipal(McCree);
@@ -392,7 +392,7 @@ class BipBoup extends Program{
                 ChangementJoueur();
             }
             
-            afficher("FinPartie.txt", McCree);
+            afficher("../ressources/FinPartie.txt", McCree);
             
             if(Cassidy.PV <= 0 ){
                 println("Bravo McCree, tu as repris ta vrai place du King du FarWest. Le jeune part comme si il n'était jamais venu");
