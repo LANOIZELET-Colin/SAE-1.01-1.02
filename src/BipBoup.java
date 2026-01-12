@@ -16,6 +16,42 @@ class BipBoup extends Program{
     CSVFile QuestionsFile = loadCSV("../ressources/questions.csv");
     boolean[] dejaPosee;
 
+
+
+// Programme principale     
+
+    void algorithm(){
+        while(true){
+            dejaPosee = new boolean[nbLignes("../ressources/questions.csv")];
+            Joueur McCree = nouvJoueur("McCree", 100, 100, new boolean[]{true, true, true});
+            Joueur Cassidy = nouvJoueur("Cassidy", 100, 100, new boolean[]{true, true, true});
+            ChoixMenuPrincipal(McCree);
+            nettoyageTerminal();
+            println("Tout d’abord, décidez vous qui incarnera McCree ou Cassidy (Pas de bagarre, ce n’est qu’un nom provisoire)");
+            println("Maintenant, on va lancer des dés pour déterminer qui commencera.");
+            TourMcCree = ChoixDuPremierJoueur();
+            sleep(2000);
+
+            while(!(Cassidy.PV <= 0 || McCree.PV <= 0)){
+                nettoyageTerminal();
+                JoueurActuel(McCree, Cassidy);
+                ChangementJoueur();
+            }
+            
+            afficher("../ressources/FinPartie.txt", McCree);
+            
+            if(Cassidy.PV <= 0 ){
+                println("Bravo McCree, tu as repris ta vrai place du King du FarWest. Le jeune part comme si il n'était jamais venu");
+            }else{
+                println("Bravo Cassidy, tu gardes la place du King ! L'ancien retourne dans sa tombe");
+            }
+                sleep(2000);
+            
+            afficherTableauDesScores(McCree, Cassidy);
+        }             
+    }
+
+
 // Création et paramètrage des joueurs
    
 
@@ -116,7 +152,34 @@ class BipBoup extends Program{
         sleep(800);
     }
 
+    void animationDe(int lancer){
+        sleep(400);
+        for (int i=0; i<lancer; i++){
+            print(". ");
+            sleep(300);
+        }
+        println();
+    }
 
+// fonctions pour savoir s'il reste des questions
+
+    boolean aucuneQuestion(){
+    for (int i = 0; i < length(dejaPosee); i++){
+        if (!dejaPosee[i]){
+            return false; 
+        }
+    }
+    return true;
+}
+
+
+// Si aucune question restante, réinitialise toutes les questions et permet de les reposer
+
+    void reinitialiserQuestion(){
+        for (int i=0; i<length(dejaPosee); i++){
+            dejaPosee[i] = false;
+        }
+    }
 
 // Fonctions principales d'affichage de la partie
     
@@ -265,9 +328,11 @@ class BipBoup extends Program{
 
         String choix;
         boolean questionTrouvee = false;
+        if (aucuneQuestion()){
+            reinitialiserQuestion();
+        }
 
         while (!questionTrouvee) {
-
             do {
                 nettoyageTerminal();
                 afficher("../ressources/menuQuestion.txt", j_actuel);
@@ -354,10 +419,12 @@ class BipBoup extends Program{
         println("McCree, appuie sur entrée pour lancer le dé.");
         readString();
         int lancer1 = random(1,6);
+        animationDe(lancer1);
         println("Vous avez obtenu un " + lancer1 + " !");
         println("Cassidy, c'est à ton tour d'appuyer sur entrée pour lancer le dé.");
         readString();
         int lancer2 = random(1,6);
+        animationDe(lancer2);
         println("Vous avez obtenu un " + lancer2 + " !");
         if (lancer1 > lancer2){
             println("C'est donc à McCree de commencer");
@@ -371,39 +438,6 @@ class BipBoup extends Program{
         }
     }
 
-
-// Programme principale     
-
-    void algorithm(){
-        while(true){
-            dejaPosee = new boolean[nbLignes("../ressources/questions.csv")];
-            Joueur McCree = nouvJoueur("McCree", 100, 100, new boolean[]{true, true, true});
-            Joueur Cassidy = nouvJoueur("Cassidy", 100, 100, new boolean[]{true, true, true});
-            ChoixMenuPrincipal(McCree);
-            nettoyageTerminal();
-            println("Tout d’abord, décidez vous qui incarnera McCree ou Cassidy (Pas de bagarre, ce n’est qu’un nom provisoire)");
-            println("Maintenant, on va lancer des dés pour déterminer qui commencera.");
-            TourMcCree = ChoixDuPremierJoueur();
-            sleep(2000);
-
-            while(!(Cassidy.PV <= 0 || McCree.PV <= 0)){
-                nettoyageTerminal();
-                JoueurActuel(McCree, Cassidy);
-                ChangementJoueur();
-            }
-            
-            afficher("../ressources/FinPartie.txt", McCree);
-            
-            if(Cassidy.PV <= 0 ){
-                println("Bravo McCree, tu as repris ta vrai place du King du FarWest. Le jeune part comme si il n'était jamais venu");
-            }else{
-                println("Bravo Cassidy, tu gardes la place du King ! L'ancien retourne dans sa tombe");
-            }
-                sleep(2000);
-            
-            afficherTableauDesScores(McCree, Cassidy);
-        }             
-    }
 
     void testRemplache(){
         Joueur j1 = nouvJoueur("j", 400, 400, new boolean[]{true, true, true});
