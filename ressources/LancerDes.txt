@@ -1,0 +1,10 @@
+=================================
+        LANCER DE DÉS
+=================================
+
+Tout d’abord, décidez vous qui incarnera McCree ou Cassidy (Pas de bagarre, ce n’est qu’un nom provisoire)
+Ce choix n'aura aucun incident sur la partie, cela change uniquement votre nom.
+Maintenant, on va lancer des dés pour déterminer qui commencera.
+Chaque joueur lance un dé, chacun son tour.
+
+McCree, à toi de commencer, appuie sur entrée pour lancer ton dé. 🎲

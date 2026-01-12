@@ -27,9 +27,7 @@ class BipBoup extends Program{
             Joueur Cassidy = nouvJoueur("Cassidy", 100, 100, new boolean[]{true, true, true});
             ChoixMenuPrincipal(McCree);
             nettoyageTerminal();
-            println("Tout d’abord, décidez vous qui incarnera McCree ou Cassidy (Pas de bagarre, ce n’est qu’un nom provisoire)");
-            println("Maintenant, on va lancer des dés pour déterminer qui commencera.");
-            TourMcCree = ChoixDuPremierJoueur();
+            TourMcCree = ChoixDuPremierJoueur(McCree);
             sleep(2000);
 
             while(!(Cassidy.PV <= 0 || McCree.PV <= 0)){
@@ -273,10 +271,10 @@ class BipBoup extends Program{
                     }
                     j_actuel.soin[0] = false;
                     println("Vous prenez une bonne grosse gorgé de limon D.Va");
-                    println("vous récupéré 10PV ("+j_actuel.PV+" restants)");
+                    println("vous récupérez 10PV ("+j_actuel.PV+" restants)");
                     sleep(3000);
                 }else{
-                    println("vous en avez plus, dommage");
+                    println("vous n'avez plus aucune boisson, dommage");
                     sleep(2000);
                     utilisé = true;
                 }
@@ -415,17 +413,17 @@ class BipBoup extends Program{
 // détermine quel joueur commence en fonction de la valeur des dés
    
 
-    boolean ChoixDuPremierJoueur(){
-        println("McCree, appuie sur entrée pour lancer le dé.");
+    boolean ChoixDuPremierJoueur(Joueur McCree){
+        afficher("../ressources/LancerDes.txt", McCree);
         readString();
         int lancer1 = random(1,6);
         animationDe(lancer1);
-        println("Vous avez obtenu un " + lancer1 + " !");
+        println("Tu as obtenu un " + lancer1 + " !");
         println("Cassidy, c'est à ton tour d'appuyer sur entrée pour lancer le dé.");
         readString();
         int lancer2 = random(1,6);
         animationDe(lancer2);
-        println("Vous avez obtenu un " + lancer2 + " !");
+        println("Tu as obtenu un " + lancer2 + " !");
         if (lancer1 > lancer2){
             println("C'est donc à McCree de commencer");
             return true;
@@ -434,7 +432,7 @@ class BipBoup extends Program{
             return false;
         } else {
             println("Egalité ! Vous avez tous les deux obtenus " + lancer2 + ", vous devez relancer le dé.");
-            return ChoixDuPremierJoueur();
+            return ChoixDuPremierJoueur(McCree);
         }
     }
 
