@@ -23,8 +23,8 @@ class BipBoup extends Program{
     void algorithm(){
         while(true){
             dejaPosee = new boolean[nbLignes("../ressources/questions.csv")];
-            Joueur McCree = nouvJoueur("McCree", 100, 100, new boolean[]{true, true, true});
-            Joueur Cassidy = nouvJoueur("Cassidy", 100, 100, new boolean[]{true, true, true});
+            Joueur McCree = nouvJoueur("McCree");
+            Joueur Cassidy = nouvJoueur("Cassidy");
             ChoixMenuPrincipal(McCree);
             nettoyageTerminal();
             TourMcCree = ChoixDuPremierJoueur(McCree);
@@ -54,12 +54,13 @@ class BipBoup extends Program{
    
 
 
-    Joueur nouvJoueur(String nom, int PV_max, int PV, boolean[] soin){
+    Joueur nouvJoueur(String nom){
         Joueur j = new Joueur();
         j.nom = nom;
-        j.PV_max = PV_max;
-        j.PV = PV;
-        j.soin = soin;
+        j.PV_max = 100;
+        j.PV = 100;
+        j.soin = new boolean[]{true, true, true};
+        j.sommeil = false;
         j.degats_totaux = 0;
         j.nb_bonne_reponse = 0;
         j.nb_tir_rate = 0;
@@ -264,7 +265,7 @@ class BipBoup extends Program{
             afficher("../ressources/MenuSoin.txt", j_actuel);
             choix = readString();
             if (equals(choix,"1")){
-                if(j_actuel.soin[0] == true){
+                if(j_actuel.soin[0]){
                     j_actuel.PV += 10;
                     if(j_actuel.PV > j_actuel.PV_max){
                         j_actuel.PV = 100;
@@ -279,7 +280,7 @@ class BipBoup extends Program{
                     utilisé = true;
                 }
             } else if (equals(choix,"2")){
-                if(j_actuel.soin[1] == true){
+                if(j_actuel.soin[1]){
                     j_actuel.PV += 30;
                     if(j_actuel.PV > j_actuel.PV_max){
                         j_actuel.PV = 100;
@@ -294,7 +295,7 @@ class BipBoup extends Program{
                     utilisé = true;
                 }
             } else if (equals(choix, "3")){
-                if(j_actuel.soin[2] == true){
+                if(j_actuel.soin[2]){
                     j_actuel.PV += 50;
                     if(j_actuel.PV > j_actuel.PV_max){
                         j_actuel.PV = 100;
