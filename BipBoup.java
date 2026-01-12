@@ -402,4 +402,35 @@ class BipBoup extends Program{
             afficherTableauDesScores(McCree, Cassidy);
         }             
     }
+
+    void testRemplache(){
+        Joueur j1 = nouvJoueur("j", 400, 400, new boolean[]{true, true, true});
+	    assertEquals("bonjour la monde",remplace("bonjour le monde", "le", "la"));
+        assertEquals("400 PV", remplace("{PV} PV", "{PV}", "" + j1.PV));
+        assertEquals("abc abc",remplace("abc abc", "z", "x"));
+	}
+
+    void testNouvJoueur() {
+    boolean[] soins = new boolean[]{true, false, true};
+    Joueur j = nouvJoueur("Test", 100, 80, soins);
+
+    assertEquals("Test", j.nom);
+    assertEquals(100, j.PV_max);
+    assertEquals(80, j.PV);
+    assertEquals(soins, j.soin);
+    assertEquals(0, j.degats_totaux);
+    assertEquals(0, j.nb_bonne_reponse);
+    assertEquals(0, j.nb_tir_rate);
+}
+
+    void testChangementJoueur() {
+    TourMcCree = true;
+    ChangementJoueur();
+    assertEquals(false, TourMcCree);
+    ChangementJoueur();
+    assertEquals(true, TourMcCree);
+}
+
+
+
 }

@@ -1,4 +1,4 @@
-🎉==================================== Tableau Des Score ===========================================🎉
+🎉==================================== Tableau Des Scores ===========================================🎉
 
 Joueur  |   Nombre de bonnes réponses   |   Nombre de Tirs Ratés    |  Nombre de dégats infligés
 
