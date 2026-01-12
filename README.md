@@ -16,3 +16,11 @@ ijava compile BipBoup.java
 
 ijava execute BipBoup
 //lancement du jeu
+
+## Vous voulez modifier à votre sauce BipBoup ?
+
+Vous pouvez ajouter/modifier/supprimer des questions à votre guise en respecter la syntaxe dans le fichier "questions.csv" dans le dossier "ressources"
+
+Syntaxe: Question,Réponse(en un mot),difficulté(facile,moyen ou difficile)
+
+Exemple: Quel est le symbole chimique de l'oxygène ?,o,moyen
