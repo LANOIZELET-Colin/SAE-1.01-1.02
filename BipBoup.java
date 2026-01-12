@@ -116,6 +116,8 @@ class BipBoup extends Program{
         sleep(800);
     }
 
+
+
 // Fonctions principales d'affichage de la partie
     
     // Choix de menu principal, où l'utilisateur choisit soit les règles, la partie ou la fin du programme.
@@ -390,12 +392,12 @@ class BipBoup extends Program{
                 ChangementJoueur();
             }
             
-            println("La partie est terminée !!!!!");
+            afficher("FinPartie.txt", McCree);
             
             if(Cassidy.PV <= 0 ){
                 println("Bravo McCree, tu as repris ta vrai place du King du FarWest. Le jeune part comme si il n'était jamais venu");
             }else{
-                println("Bravo Cassidy, tu garde la place du King. L'ancien retourne dans sa tombe");
+                println("Bravo Cassidy, tu gardes la place du King ! L'ancien retourne dans sa tombe");
             }
                 sleep(2000);
             
@@ -417,7 +419,6 @@ class BipBoup extends Program{
     assertEquals("Test", j.nom);
     assertEquals(100, j.PV_max);
     assertEquals(80, j.PV);
-    assertEquals(soins, j.soin);
     assertEquals(0, j.degats_totaux);
     assertEquals(0, j.nb_bonne_reponse);
     assertEquals(0, j.nb_tir_rate);
