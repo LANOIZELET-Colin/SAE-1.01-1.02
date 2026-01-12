@@ -1,6 +1,7 @@
 ﻿🎮 Voici les règles du jeu :
 
 BipBoup est un jeu tour par tour pour deux joueurs où le but est d’éliminer votre adversaire à l’aide d’un pistolet.
+Pour tirer, vous devez répondre correctement à des questions basés sur plusieurs matières différentes.
 Au début de la partie, chaque joueur commence avec 100 points de vie.
 
 
