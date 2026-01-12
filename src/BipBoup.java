@@ -2,13 +2,6 @@ import extensions.File;
 import extensions.CSVFile;
 
 
-/*problèmes à régler (écris ici pour pas qu'on oublie) : 
-
-- corriger les questions reloue (genre où faut des accents)
-- Rajouter des tests !!
-- essayer de "compresser" le code
-*/
-
 class BipBoup extends Program{
 
 
@@ -106,7 +99,7 @@ class BipBoup extends Program{
             ligne = remplace(ligne, "{C.dg}", "" + Cassidy.degats_totaux);
             println(ligne);
         }
-        readString();
+        EntreeUtilisateur();
     }
 
 // Fonction qui permet de faire fonctionner les placeholder
@@ -135,6 +128,11 @@ class BipBoup extends Program{
         print("\033[H\033[2J");
     }
 
+// Demande à l'utilisateur
+
+    String EntreeUtilisateur(){
+        return readString();
+    }
 
 
 // Animations
@@ -185,22 +183,22 @@ class BipBoup extends Program{
     // Choix de menu principal, où l'utilisateur choisit soit les règles, la partie ou la fin du programme.
 
     void ChoixMenuPrincipal(Joueur McCree){
-            String choix;
+        String choix;
         do {
-                nettoyageTerminal();
-                afficher("../ressources/menu.txt", McCree);
-                choix = readString();
-                if (equals(choix,"1")){
-                    nettoyageTerminal();   
-                    afficher("../ressources/regles.txt", McCree);               
-                    readString();
-                }else if (equals(choix,"2")){
-                }else if (equals(choix,"3")){
-                    System.exit(0);
-                }else{
-                println("Veuillez choisir un chiffre entre 1 et 3");
-                sleep(1000);
-                }
+            nettoyageTerminal();
+            afficher("../ressources/menu.txt", McCree);
+            choix = EntreeUtilisateur();
+            if (equals(choix,"1")){
+                nettoyageTerminal();   
+                afficher("../ressources/regles.txt", McCree);               
+                EntreeUtilisateur();
+            }else if (equals(choix,"2")){
+            }else if (equals(choix,"3")){
+                System.exit(0);
+            }else{
+            println("Veuillez choisir un chiffre entre 1 et 3");
+            sleep(1000);
+            }
             } while (!equals(choix,"2"));
     }
 
@@ -239,7 +237,7 @@ class BipBoup extends Program{
             nettoyageTerminal();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
             afficher("../ressources/menuTour.txt", j_actuel);
 
-            choix = readString();
+            choix = EntreeUtilisateur();
             if (equals(choix,"1")){
                 poserQuestion(j_actuel, j_autre);
             }else if (equals(choix,"2")){
@@ -256,67 +254,69 @@ class BipBoup extends Program{
 
 
     void menuSoin(Joueur j_actuel, Joueur j_autre){
-        boolean utilisé = false;
+        boolean utilisé;
         String choix;
         
-         do {
+        do {
             utilisé = false;
             nettoyageTerminal();   
             afficher("../ressources/MenuSoin.txt", j_actuel);
-            choix = readString();
-            if (equals(choix,"1")){
-                if(j_actuel.soin[0]){
-                    j_actuel.PV += 10;
-                    if(j_actuel.PV > j_actuel.PV_max){
+            choix = EntreeUtilisateur();
+
+            int index = -1;
+            int soin = 0;
+
+            if (equals(choix,"1")) { index = 0; soin = 10; }
+            else if (equals(choix,"2")) { index = 1; soin = 30; }
+            else if (equals(choix,"3")) { index = 2; soin = 50; }
+
+            if (index != -1){
+                if (j_actuel.soin[index]) {
+
+                    j_actuel.PV += soin;
+                    if (j_actuel.PV > j_actuel.PV_max){
                         j_actuel.PV = 100;
                     }
-                    j_actuel.soin[0] = false;
-                    println("Vous prenez une bonne grosse gorgé de limon D.Va");
-                    println("vous récupérez 10PV ("+j_actuel.PV+" restants)");
+                    j_actuel.soin[index] = false;
+
+                    if (index == 0){
+                        println("Vous prenez une bonne grosse gorgé de limon D.Va");
+                        println("vous récupéré 10PV ("+j_actuel.PV+" restants)");
+                    }
+                    else if (index == 1){
+                        println("Ange vous apprécie beaucoup (peut-être trop)");
+                        println("vous récupérez 30PV ("+j_actuel.PV+" restants)");
+                    }
+                    else{
+                        animationRepos(j_actuel.nom);
+                        println("Vous vous endormez comme Ronflex. J'espère que vous pourrez vous réveiller sans l'aide de la pokeflute !");
+                        println("vous récupérez 50PV, mais vous ne pourrez pas jouer au prochain tour. ("+j_actuel.PV+" restants)");
+                        j_actuel.sommeil = true;
+                    }
+
                     sleep(3000);
-                }else{
-                    println("vous n'avez plus aucune boisson, dommage");
+
+                } else {
+                    if (index == 0){
+                        println("vous en avez plus, dommage");
+                    }
+                    else if (index == 1){
+                        println("Ange a quitté la partie, courage");
+                    }
+                    else{
+                        println("Vous êtes insomniaque, impossible de vous reposer.");
+                    }
                     sleep(2000);
                     utilisé = true;
                 }
-            } else if (equals(choix,"2")){
-                if(j_actuel.soin[1]){
-                    j_actuel.PV += 30;
-                    if(j_actuel.PV > j_actuel.PV_max){
-                        j_actuel.PV = 100;
-                    }
-                    j_actuel.soin[1] = false;
-                    println("Ange vous apprécie beaucoup (peut-être trop)");
-                    println("vous récupérez 30PV ("+j_actuel.PV+" restants)");
-                    sleep(3000);
-                }else{
-                    println("Ange a quitté la partie, courage");
-                    sleep(2000);
-                    utilisé = true;
-                }
-            } else if (equals(choix, "3")){
-                if(j_actuel.soin[2]){
-                    j_actuel.PV += 50;
-                    if(j_actuel.PV > j_actuel.PV_max){
-                        j_actuel.PV = 100;
-                    }
-                    j_actuel.soin[2] = false;
-                    animationRepos(j_actuel.nom);
-                    println("Vous vous endormez comme Ronflex. J'espère que vous pourrez vous réveiller sans l'aide de la pokeflute !");
-                    println("vous récupérez 50PV, mais vous ne pourrez pas jouer au prochain tour. ("+j_actuel.PV+" restants)");
-                    j_actuel.sommeil = true;
-                    sleep(3000);
-                }else{
-                    println("Vous êtes insomniaque, impossible de vous reposer.");
-                    sleep(2000);
-                    utilisé = true;
-                }
+
             } else if (equals(choix,"4")){
                 menuJoueur(j_actuel, j_autre);
             } else {
                 println("Veuillez choisir un chiffre entre 1 et 4");
                 sleep(1000);
-            }                
+            }
+
         } while ((!equals(choix,"1")) && (!equals(choix,"2")) && (!equals(choix,"3")) && (!equals(choix,"4")) || utilisé);
     }
 
@@ -335,7 +335,7 @@ class BipBoup extends Program{
             do {
                 nettoyageTerminal();
                 afficher("../ressources/menuQuestion.txt", j_actuel);
-                choix = readString();
+                choix = EntreeUtilisateur();
                
                if (!equals(choix,"1") && !equals(choix,"2") && !equals(choix,"3")){ 
                     println("Choisissez un chiffre entre 1 et 3.");
@@ -368,12 +368,12 @@ class BipBoup extends Program{
                 dejaPosee[numQuestion] = true;
 
                 println("PRET ? APPUYEZ SUR ENTREE QUAND VOUS VOULEZ !");
-                readString();
+                EntreeUtilisateur();
                 println("GOOOOOOO !");
                 println(getCell(QuestionsFile, numQuestion, 0));
 
                 long debutCompt = getTime();
-                String j_reponse = toLowerCase(readString());
+                String j_reponse = toLowerCase(EntreeUtilisateur());
                 long finCompt = getTime();
 
                 double tempsCompt = (finCompt - debutCompt) / 1000.0;
@@ -416,15 +416,18 @@ class BipBoup extends Program{
 
     boolean ChoixDuPremierJoueur(Joueur McCree){
         afficher("../ressources/LancerDes.txt", McCree);
-        readString();
+        EntreeUtilisateur();
         int lancer1 = random(1,6);
         animationDe(lancer1);
         println("Tu as obtenu un " + lancer1 + " !");
+
         println("Cassidy, c'est à ton tour d'appuyer sur entrée pour lancer le dé.");
-        readString();
+        EntreeUtilisateur();
         int lancer2 = random(1,6);
         animationDe(lancer2);
         println("Tu as obtenu un " + lancer2 + " !");
+        sleep(300);
+
         if (lancer1 > lancer2){
             println("C'est donc à McCree de commencer");
             return true;
@@ -438,33 +441,29 @@ class BipBoup extends Program{
     }
 
 
-    void testRemplache(){
-        Joueur j1 = nouvJoueur("j", 400, 400, new boolean[]{true, true, true});
+    void testRemplace(){
+        Joueur j1 = nouvJoueur("j");
 	    assertEquals("bonjour la monde",remplace("bonjour le monde", "le", "la"));
-        assertEquals("400 PV", remplace("{PV} PV", "{PV}", "" + j1.PV));
+        assertEquals("100 PV", remplace("{PV} PV", "{PV}", "" + j1.PV));
         assertEquals("abc abc",remplace("abc abc", "z", "x"));
 	}
 
     void testNouvJoueur() {
-    boolean[] soins = new boolean[]{true, false, true};
-    Joueur j = nouvJoueur("Test", 100, 80, soins);
+        Joueur j = nouvJoueur("Test");
 
-    assertEquals("Test", j.nom);
-    assertEquals(100, j.PV_max);
-    assertEquals(80, j.PV);
-    assertEquals(0, j.degats_totaux);
-    assertEquals(0, j.nb_bonne_reponse);
-    assertEquals(0, j.nb_tir_rate);
-}
+        assertEquals("Test", j.nom);
+        assertEquals(100, j.PV_max);
+        assertEquals(100, j.PV);
+        assertEquals(0, j.degats_totaux);
+        assertEquals(0, j.nb_bonne_reponse);
+        assertEquals(0, j.nb_tir_rate);
+    }
 
     void testChangementJoueur() {
-    TourMcCree = true;
-    ChangementJoueur();
-    assertEquals(false, TourMcCree);
-    ChangementJoueur();
-    assertEquals(true, TourMcCree);
-}
-
-
-
+        TourMcCree = true;
+        ChangementJoueur();
+        assertEquals(false, TourMcCree);
+        ChangementJoueur();
+        assertEquals(true, TourMcCree);
+    }
 }
